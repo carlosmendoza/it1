@@ -8,7 +8,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
-
 import dao.DAOCliente;
 import vos.Cliente;
 
@@ -102,6 +101,136 @@ public class TM {
 		}
 		return bebedores;
 	}
+
+
+	public Cliente darClientePorId(int id) throws Exception {
+		Cliente cliente;
+		DAOCliente daoCliente = new DAOCliente();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoCliente.setConn(conn);
+			cliente = daoCliente.buscarClientePorId(id);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCliente.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return cliente;
+	}
+
+
+	public void addCliente(Cliente cliente) throws SQLException {
+		DAOCliente daoCliente = new DAOCliente();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoCliente.setConn(conn);
+			daoCliente.addCliente(cliente);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCliente.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+	public void updateCliente(Cliente cliente) throws SQLException {
+		DAOCliente daoCliente = new DAOCliente();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoCliente.setConn(conn);
+			daoCliente.updateCliente(cliente);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCliente.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+	public void deleteCliente(Cliente cliente) throws SQLException {
+		
+		DAOCliente daoCliente = new DAOCliente();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoCliente.setConn(conn);
+			daoCliente.deleteCliente(cliente);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCliente.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+
+
+
+	
 	
 	
 

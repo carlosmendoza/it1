@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import vos.Cliente;
 
+
 public class DAOCliente {
 	
 		public final static String USUARIO = "USUARIO";
@@ -64,6 +65,78 @@ public class DAOCliente {
 				clientes.add(new Cliente(id, nombre, documento, rol));
 			}
 			return clientes;
+		}
+
+
+		/**
+		 * Metodo que, usando la conexión a la base de datos, un 
+		 * cliente de la base de datos 
+		 * <b>SQL Statement:</b> SELECT * FROM CLIENTE WHERE ID=id
+		 * 
+		 * @return Cliente con id dado por parametro
+		 * @throws SQLException
+		 *             - Cualquier error que la base de datos arroje.
+		 * @throws Exception
+		 *             - Cualquier error que no corresponda a la base de datos
+		 */
+		public Cliente buscarClientePorId(int id) throws SQLException {
+		Cliente cliente = null;
+		String sql = "SELECT * FROM CLIENTE WHERE id =" + id;
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+
+		if (rs.next()) {
+			
+			String nombre = rs.getString("nombre");
+			int documento = rs.getInt("documento");
+			String rol = rs.getString("rol");
+			cliente = new Cliente(id, nombre, documento, rol);
+		}
+
+		return cliente;
+	}
+
+
+		public void addCliente(Cliente cliente) throws SQLException {
+			String sql = "INSERT INTO CLIENTE VALUES ('";
+			sql += cliente.getId() + "','";
+			sql += cliente.getNombre() + "','";
+			sql += cliente.getDocumento() + "','";
+			sql += cliente.getRol() + "')";
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+			
+		}
+
+
+		public void updateCliente(Cliente cliente) throws SQLException {
+			String sql = "UPDATE CLIENTE SET ";
+			sql += "NOMBRE ='" + cliente.getNombre() + "',";
+			sql += "DOCUMENTO = " + cliente.getDocumento() + ",";
+			sql += "ROL = '" + cliente.getRol() + "'";
+			sql += "WHERE ID=" + cliente.getId() + "";
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+			
+		}
+
+
+		public void deleteCliente(Cliente cliente) throws SQLException {
+
+			String sql = "DELETE FROM CLIENTE";
+			sql += " WHERE ID = " + cliente.getId();
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+			
 		}
 
 }
