@@ -11,6 +11,7 @@ import java.util.Properties;
 import dao.DAOCliente;
 import dao.DAOOperador;
 import vos.Cliente;
+import vos.Oferta;
 import vos.Operador;
 
 
@@ -67,6 +68,10 @@ public class TM {
 		System.out.println("[PARRANDEROS APP] Attempting Connection to: " + url + " - By User: " + user);
 		return DriverManager.getConnection(url, user, password);
 	}
+	
+///////////////////////////////////
+////////// CLIENTE ///////////////
+/////////////////////////////////
 
 	public List<Cliente> getAllClientes() throws Exception {
 		DAOCliente daoCliente = new DAOCliente();
@@ -228,6 +233,10 @@ public class TM {
 		}
 		
 	}
+	
+///////////////////////////////////
+////////// OPERADOR //////////////
+/////////////////////////////////
 
 
 	public List<Operador> getAllOperadores() throws Exception {
@@ -356,6 +365,29 @@ public class TM {
 		}
 		
 	}
+
+//////////////////////////////////
+////////// OFERTA ///////////////
+////////////////////////////////
+
+	public List<Oferta> getAllOfertas() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public Oferta darOfertaPorId(int idOferta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	public List<Oferta> darOfertasPorOperador(int idOperador) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 
 
