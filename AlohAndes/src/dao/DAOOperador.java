@@ -58,11 +58,11 @@ public class DAOOperador {
 	/**
 	 * Tipos de operador
 	 */
-	private static final String PERSONAN= "PERSONANATURAL";
-	private static final String PERSONAE= "PERSONAEVENTO";
-	private static final String OVIVIENDAU= "OVIVIENDAU";
-	private static final String HOTEL= "HOTEL";
-	private static final String HOSTAL= "HOSTAL";
+	private static final String PERSONAN= "persona natural";
+	private static final String PERSONAE= "persona evento";
+	private static final String OVIVIENDAU= "viviendaU";
+	private static final String HOTEL= "hotel";
+	private static final String HOSTAL= "hostal";
 
 	/**
 	 * Metodo que, usando la conexión a la base de datos, saca todos los

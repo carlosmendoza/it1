@@ -94,7 +94,7 @@ INSERT INTO OPERADOR VALUES(12, 'carlos mendoza', 'persona natural', 3453474783,
 INSERT INTO OPERADOR VALUES(13, 'pablo navaz', 'persona natural', 23454783, 0, '8:30','15:00' );
 INSERT INTO OPERADOR VALUES(14, 'leo messi', 'persona evento', 56756974783, 0, '10:00','17:00' );
 INSERT INTO OPERADOR VALUES(15, 'cristiano ronaldo', 'persona evento', 56779747832, 0,'2:00','18:00' );
-INSERT INTO OPERADOR VALUES(16, 'naruto uzumaki', 'personaevento', 104534483, 0, '9:00','20:00' );
+INSERT INTO OPERADOR VALUES(16, 'naruto uzumaki', 'persona evento', 104534483, 0, '9:00','20:00' );
 INSERT INTO OPERADOR VALUES(17, 'tio rico MC pato', 'persona evento', 18767986783, 0, '7:00','13:00' );
 INSERT INTO OPERADOR VALUES(18, 'hotel los robles', 'hotel', 0, 8008984561 , '8:00','8:00');
 INSERT INTO OPERADOR VALUES(19, 'hotel paris', 'hotel', 0, 8984561800,  '8:00','8:00' );
