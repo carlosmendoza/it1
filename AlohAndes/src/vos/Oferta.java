@@ -40,6 +40,11 @@ public class Oferta {
 	public boolean isDisponibilidad() {
 		return disponibilidad;
 	}
+	public boolean getDisponibilidad()
+	
+	{
+		return disponibilidad;
+	}
 
 	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
