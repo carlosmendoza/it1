@@ -81,10 +81,12 @@ public class DAOOperador {
 			String nombre= rs.getString("nombre");
 			int documento = rs.getInt("documento");
 			String tipo = rs.getString("tipo");
-			Date horario = rs.getDate("horario");
+			String horaInicial = rs.getString("horaInicial");
+			String horaFinal = rs.getString("horaFinal");
+
 			int nit = rs.getInt("nit");
 	
-			operadores.add(new Operador(id,nombre,tipo,documento,horario,nit));
+			operadores.add(new Operador(id,nombre,tipo,documento,horaInicial,horaFinal, nit));
 		}
 		return operadores;
 	}
