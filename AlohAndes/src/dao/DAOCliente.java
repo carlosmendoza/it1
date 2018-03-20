@@ -119,7 +119,7 @@ public class DAOCliente {
 			sql += "NOMBRE ='" + cliente.getNombre() + "',";
 			sql += "DOCUMENTO = " + cliente.getDocumento() + ",";
 			sql += "ROL = '" + cliente.getRol() + "'";
-			sql += "WHERE ID=" + cliente.getId() + "";
+			sql += "WHERE ID=" + cliente.getId();
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);

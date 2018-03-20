@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 import dao.DAOCliente;
+import dao.DAOOperador;
 import vos.Cliente;
+import vos.Operador;
 
 
 public class TM {
@@ -216,6 +218,134 @@ public class TM {
 		} finally {
 			try {
 				daoCliente.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+
+	public List<Operador> getAllOperadores() throws Exception {
+		List<Operador> operadores;
+		DAOOperador daoOperador = new DAOOperador();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			operadores = daoOperador.darOperadores();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return operadores;
+	}
+
+
+	public void addOperador(Operador operador) throws Exception {
+		DAOOperador daoOperador = new DAOOperador();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			daoOperador.addOperador(operador);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+
+	public void updateOperador(Operador operador) throws SQLException {
+		DAOOperador daoOperador = new DAOOperador();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			daoOperador.updateOperador(operador);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+		
+	}
+
+
+	public void deleteOperador(Operador operador) throws SQLException {
+		DAOOperador daoOperador = new DAOOperador();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			daoOperador.deleteOperador(operador);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
 				if (this.conn != null)
 					this.conn.close();
 			} catch (SQLException exception) {
