@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -92,6 +91,7 @@ public class DAOOperador {
 			String tipo = rs.getString("tipo");
 			String horaInicial = rs.getString("horaInicial");
 			String horaFinal = rs.getString("horaFinal");
+
 			int nit = rs.getInt("nit");
 	
 			operadores.add(new Operador(id,nombre,tipo,documento,nit,horaInicial, horaFinal));

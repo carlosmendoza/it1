@@ -128,5 +128,5 @@ public class OperadorServices {
 		}
 		return Response.status(200).entity(operador).build();
 	}
-
 }
+

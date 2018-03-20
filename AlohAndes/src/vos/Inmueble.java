@@ -17,10 +17,10 @@ public class Inmueble {
 
 
 	@JsonProperty(value="tamanio")
-	private String tamanio;
+	private int tamanio;
 	
 	public Inmueble(@JsonProperty(value="id") int id, @JsonProperty(value="ubicacion") String ubicacion, @JsonProperty(value="tipo") String tipo,
-			@JsonProperty(value="categoria") String categoria, @JsonProperty(value="tamanio") String tamanio )
+			@JsonProperty(value="categoria") String categoria, @JsonProperty(value="tamanio") int tamanio )
 	{
 		this.id= id;
 		this.ubicacion= ubicacion;
@@ -61,11 +61,11 @@ public class Inmueble {
 		this.categoria = categoria;
 	}
 
-	public String getTamanio() {
+	public int getTamanio() {
 		return tamanio;
 	}
 
-	public void setTamanio(String tamanio) {
+	public void setTamanio(int tamanio) {
 		this.tamanio = tamanio;
 	}
 
