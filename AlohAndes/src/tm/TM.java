@@ -411,9 +411,35 @@ public class TM {
 	}
 
 
-	public Oferta darOfertaPorId(int idOferta) {
-		// TODO Auto-generated method stub
-		return null;
+	public Oferta darOfertaPorId(int idOferta) throws SQLException {
+		Oferta oferta;
+		DAOOferta daoOferta = new DAOOferta();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			oferta = daoOferta.buscarOfertaPorId(idOferta);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return oferta;
 	}
 
 
@@ -486,6 +512,38 @@ public class TM {
 			}
 		}
 		return inmuebles;
+	}
+
+
+	public Inmueble darInmueblePorId(int id) throws SQLException {
+		Inmueble inmueble;
+		DAOInmueble daoInmueble = new DAOInmueble();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoInmueble.setConn(conn);
+			inmueble = daoInmueble.buscarInmueblePorId(id);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoInmueble.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return inmueble;
 	}
 
 

@@ -47,18 +47,18 @@ public class InmuebleServices {
 	}
 	
 	@GET
-	@Path("idOferta/{id}")
+	@Path("idInmueble/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getOfertaPorId(@PathParam("id") String idOferta) {
+	public Response getInmueblePorId(@PathParam("id") String idInmueble) {
 
 		TM tm = new TM(getPath());
-		Oferta o;
+		Inmueble o;
 		try {
-			if (idOferta == null )
-				throw new Exception("Id de la oferta no valido");
+			if (idInmueble == null )
+				throw new Exception("Id del inmueble no valido");
 			else
 			{
-			o = tm.darOfertaPorId(Integer.parseInt(idOferta));
+			o = tm.darInmueblePorId(Integer.parseInt(idInmueble));
 			}
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
