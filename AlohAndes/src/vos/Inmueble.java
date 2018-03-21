@@ -5,6 +5,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class Inmueble {
 	@JsonProperty(value="id")
 	private int id;
+	
+	@JsonProperty(value="idOferta")
+	private int idOferta;
 
 	@JsonProperty(value="ubicacion")
 	private String ubicacion;
@@ -19,14 +22,16 @@ public class Inmueble {
 	@JsonProperty(value="tamanio")
 	private int tamanio;
 	
-	public Inmueble(@JsonProperty(value="id") int id, @JsonProperty(value="ubicacion") String ubicacion, @JsonProperty(value="tipo") String tipo,
-			@JsonProperty(value="categoria") String categoria, @JsonProperty(value="tamanio") int tamanio )
+	public Inmueble(@JsonProperty(value="id") int id,@JsonProperty(value="idOferta") int idOferta,@JsonProperty(value="tipo") String tipo,
+			 @JsonProperty(value="categoria") String categoria,
+			 @JsonProperty(value="tamanio") int tamanio, @JsonProperty(value="ubicacion") String ubicacion )
 	{
 		this.id= id;
 		this.ubicacion= ubicacion;
 		this.tipo = tipo;
 		this.categoria = categoria;
 		this.tamanio = tamanio;
+		this.idOferta = idOferta;
 	}
 
 	public int getId() {
@@ -67,6 +72,14 @@ public class Inmueble {
 
 	public void setTamanio(int tamanio) {
 		this.tamanio = tamanio;
+	}
+
+	public int getIdOferta() {
+		return idOferta;
+	}
+
+	public void setIdOferta(int idOferta) {
+		this.idOferta = idOferta;
 	}
 
 

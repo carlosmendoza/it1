@@ -11,12 +11,12 @@ import vos.Oferta;
 public class DAOOferta {
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciï¿½n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiï¿½n a la base de datos
 	 */
 	private Connection conn;
 	
@@ -51,7 +51,7 @@ public class DAOOferta {
 	}
 	
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los
 	 * Ofertas de la base de datos 
 	 * <b>SQL Statement:</b> SELECT * FROM Oferta
 	 * 
@@ -64,6 +64,7 @@ public class DAOOferta {
 	public ArrayList<Oferta> getOfertas() throws SQLException, Exception {
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
 
+		System.out.println("metodo get ofertas dao");
 		String sql = "SELECT * FROM OFERTA";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -74,14 +75,15 @@ public class DAOOferta {
 			int id = rs.getInt("id");
 			double costo= rs.getDouble("costo");
 			boolean disponibilidad = rs.getBoolean("disponibilidad");
-			ofertas.add(new Oferta(id, costo, disponibilidad));
+			int idOperador = rs.getInt("idOperador");
+			ofertas.add(new Oferta(id, costo, disponibilidad, idOperador));
 		}
 		return ofertas;
 	}
 
 
 	/**
-	 * Metodo que, usando la conexión a la base de datos, un 
+	 * Metodo que, usando la conexiï¿½n a la base de datos, un 
 	 * Oferta de la base de datos 
 	 * <b>SQL Statement:</b> SELECT * FROM Oferta WHERE ID=id
 	 * 
@@ -104,8 +106,9 @@ public class DAOOferta {
 		
 		double costo= rs.getDouble("costo");
 		boolean disponibilidad = rs.getBoolean("disponibilidad");
+		int idOperador = rs.getInt("idOperador");
 		
-		oferta = new Oferta(id, costo, disponibilidad);
+		oferta = new Oferta(id, costo, disponibilidad, idOperador);
 	}
 
 	return oferta;
@@ -113,11 +116,12 @@ public class DAOOferta {
 
 
 	public void addOferta(Oferta oferta) throws SQLException {
-		String sql = "INSERT INTO Oferta VALUES ('";
-		sql += oferta.getId() + "','";
-		sql += oferta.getCosto() + "','";
-		sql += oferta.isDisponibilidad() + "')";
-
+		String sql = "INSERT INTO Oferta VALUES (";
+		sql += oferta.getId() + ",";
+		sql += oferta.getIdOperador() + ",";
+		sql += oferta.getCosto() + ",";
+		sql += oferta.getDisponibilidad() + ")";
+		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();

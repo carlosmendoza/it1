@@ -74,7 +74,7 @@ public class DAOServicio {
 		public ArrayList<Servicio> darServicios() throws SQLException, Exception {
 			ArrayList<Servicio> servicios = new ArrayList<Servicio>();
 
-			String sql = "SELECT * FROM SERVICIOS";
+			String sql = "SELECT * FROM SERVICIO";
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);

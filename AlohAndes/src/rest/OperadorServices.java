@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 import dao.DAOOperador;
 import tm.TM;
 import vos.Operador;
-
+@Path("operadores")
 public class OperadorServices {
 	@Context
 	private ServletContext context;

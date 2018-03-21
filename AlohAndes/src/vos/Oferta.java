@@ -13,11 +13,15 @@ public class Oferta {
 	@JsonProperty(value="disponibilidad")
 	private boolean disponibilidad;
 	
-	public Oferta(@JsonProperty(value="id") int id, @JsonProperty(value="costo") double costo, @JsonProperty(value="disponibilidad") boolean disponibilidad )
+	@JsonProperty(value="idOperador")
+	private int idOperador;
+	public Oferta(@JsonProperty(value="id") int id, @JsonProperty(value="costo") double costo, 
+	@JsonProperty(value="disponibilidad") boolean disponibilidad, @JsonProperty(value="idOperador") int idOperador )
 	{
 		this.id = id;
 		this.costo = costo;
 		this.disponibilidad = disponibilidad;
+		this.idOperador = idOperador;
 		
 	}
 
@@ -49,5 +53,15 @@ public class Oferta {
 	public void setDisponibilidad(boolean disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
+
+	public int getIdOperador() {
+		return idOperador;
+	}
+
+	public void setIdOperador(int idOperador) {
+		this.idOperador = idOperador;
+	}
+
+	
 	
 }
