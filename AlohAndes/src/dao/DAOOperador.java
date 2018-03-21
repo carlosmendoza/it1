@@ -1,10 +1,13 @@
 package dao;
 
+import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import org.codehaus.jackson.node.BigIntegerNode;
 
 import vos.Operador;
 
@@ -85,16 +88,21 @@ public class DAOOperador {
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			int id  = rs.getInt("id");
-			String nombre= rs.getString("nombre");
-			int documento = rs.getInt("documento");
-			String tipo = rs.getString("tipo");
-			String horaInicial = rs.getString("horaInicial");
-			String horaFinal = rs.getString("horaFinal");
+			try {
+				int id  = rs.getInt("id");
+				String nombre= rs.getString("nombre");
+				long documento = rs.getLong("documento");
+				String tipo = rs.getString("tipo");
+				String horaInicial = rs.getString("horaInicial");
+				String horaFinal = rs.getString("horaFinal");
 
-			int nit = rs.getInt("nit");
-	
-			operadores.add(new Operador(id,nombre,tipo,documento,nit,horaInicial, horaFinal));
+				long nit = rs.getLong("nit");
+		
+				operadores.add(new Operador(id,nombre,tipo,(int)documento,(int)nit,horaInicial, horaFinal));
+			}catch (Exception e) {
+				System.out.println("=====================================: "+rs.getInt("id"));
+				e.printStackTrace();
+			}
 		}
 		return operadores;
 	}

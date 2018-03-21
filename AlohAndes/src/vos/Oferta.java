@@ -11,17 +11,23 @@ public class Oferta {
 	private double costo;
 
 	@JsonProperty(value="disponibilidad")
-	private boolean disponibilidad;
+	private  int disponibilidad;
 	
 	@JsonProperty(value="idOperador")
 	private int idOperador;
-	public Oferta(@JsonProperty(value="id") int id, @JsonProperty(value="costo") double costo, 
-	@JsonProperty(value="disponibilidad") boolean disponibilidad, @JsonProperty(value="idOperador") int idOperador )
+	
+	@JsonProperty(value="capacidadReal")
+	private int capacidadReal;
+	
+	public Oferta(@JsonProperty(value="id") int id , @JsonProperty(value="idOperador") int idOperador,@JsonProperty(value="capacidadReal") int capacidadReal,
+			@JsonProperty(value="costo") double costo, 
+	@JsonProperty(value="disponibilidad") int disponibilidad )
 	{
 		this.id = id;
 		this.costo = costo;
 		this.disponibilidad = disponibilidad;
 		this.idOperador = idOperador;
+		this.capacidadReal = capacidadReal;
 		
 	}
 
@@ -41,16 +47,14 @@ public class Oferta {
 		this.costo = costo;
 	}
 
-	public boolean isDisponibilidad() {
-		return disponibilidad;
-	}
-	public boolean getDisponibilidad()
+	
+	public int getDisponibilidad()
 	
 	{
 		return disponibilidad;
 	}
 
-	public void setDisponibilidad(boolean disponibilidad) {
+	public void setDisponibilidad(int disponibilidad) {
 		this.disponibilidad = disponibilidad;
 	}
 
@@ -60,6 +64,11 @@ public class Oferta {
 
 	public void setIdOperador(int idOperador) {
 		this.idOperador = idOperador;
+	}
+
+	public int getCapacidadReal() {
+		// TODO Auto-generated method stub
+		return capacidadReal;
 	}
 
 	

@@ -48,34 +48,20 @@ public class ClienteServices {
 		TM tm = new TM(getPath());
 		List<Cliente> clientes;
 		try {
+			System.out.println("PRUEBAAAA ------");
 			clientes = tm.getAllClientes();
+
+			System.out.println("PRUEBAAAA ..........");
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(500).entity(doErrorMessage(e)).build();
+			
 		}
 		return Response.status(200).entity(clientes).build();
 	}
 
 
-	/**
-	 * Metodo que expone servicio REST usando GET que da un cliente de la base de datos. 
-	 * <b>URL: </b> http://"ip o nombre de host":8080/AlohAndes/rest/(...)
-	 * @param id identificador del cliente
-	 * @return Json el cliente de la base de datos o json con el
-	 * error que se produjo
-	 */
-	@GET
-	@Path("{id: \\d+}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getClientePorId(@QueryParam("id") int id) {
-
-		TM tm = new TM(getPath());
-		try {
-			Cliente cliente = tm.darClientePorId(id);
-			return Response.status(200).entity(cliente).build();
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-	}
+	
 
 	/**
 	 * Metodo que expone servicio REST usando POST que agrega el cliente que

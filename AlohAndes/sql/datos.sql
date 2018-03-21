@@ -88,27 +88,26 @@ CONSTRAINT FK_SERVICIO_ID FOREIGN KEY(IDSERVICIO) REFERENCES  SERVICIO(ID)
 );
 
 --datos de los operadores
-INSERT INTO OPERADOR VALUES(10, 'federico marroquin', 'persona natural', 1077974783, 0, '8:00','18:00' );
-INSERT INTO OPERADOR VALUES(11, 'mario perez', 'persona natural', 1077923453243, 0, '10:00','17:00' );
-INSERT INTO OPERADOR VALUES(12, 'carlos mendoza', 'persona natural', 3453474783, 0, '9:00','20:00' );
+INSERT INTO OPERADOR VALUES(10, 'federico marroquin', 'persona natural', 1077974, 0, '8:00','18:00' );
+INSERT INTO OPERADOR VALUES(11, 'mario perez', 'persona natural', 1077923, 0, '10:00','17:00' );
+INSERT INTO OPERADOR VALUES(12, 'carlos mendoza', 'persona natural', 3453474, 0, '9:00','20:00' );
 INSERT INTO OPERADOR VALUES(13, 'pablo navaz', 'persona natural', 23454783, 0, '8:30','15:00' );
 INSERT INTO OPERADOR VALUES(14, 'leo messi', 'persona evento', 56756974783, 0, '10:00','17:00' );
-INSERT INTO OPERADOR VALUES(15, 'cristiano ronaldo', 'persona evento', 56779747832, 0,'2:00','18:00' );
-INSERT INTO OPERADOR VALUES(16, 'naruto uzumaki', 'persona evento', 104534483, 0, '9:00','20:00' );
-INSERT INTO OPERADOR VALUES(17, 'tio rico MC pato', 'persona evento', 18767986783, 0, '7:00','13:00' );
-INSERT INTO OPERADOR VALUES(18, 'hotel los robles', 'hotel', 0, 8008984561 , '8:00','8:00');
-INSERT INTO OPERADOR VALUES(19, 'hotel paris', 'hotel', 0, 8984561800,  '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(20, 'sheraton', 'hotel', 0, 8984561234,  '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(21, 'hotel mediterraneo', 'hotel', 0, 8984561234,  '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(22, 'hostal Bakano', 'hostal', 0,4563561234, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(23, 'la candelaria hostel', 'hostal', 0, 8984563334, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(24, 'chorro de quevedo', 'hostal', 0, 8777563334, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(25, 'yepeto hostal', 'hostal', 0, 8984563844, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(26, 'city U', 'viviendaU', 0, 1984563334, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(27, 'esstudia', 'viviendaU', 0, 1234563334, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(28, 'livinnbogita', 'viviendaU', 0, 0984563330, '8:00','8:00' );
-INSERT INTO OPERADOR VALUES(29, 'dormitorios loft', 'viviendaU', 0, 554456390, '8:00','8:00' );
-
+INSERT INTO OPERADOR VALUES(15, 'cristiano ronaldo', 'persona evento', 9747832, 0,'2:00','18:00' );
+INSERT INTO OPERADOR VALUES(16, 'naruto uzumaki', 'persona evento', 134483, 0, '9:00','20:00' );
+INSERT INTO OPERADOR VALUES(17, 'tio rico MC pato', 'persona evento', 186783, 0, '7:00','13:00' );
+INSERT INTO OPERADOR VALUES(18, 'hotel los robles', 'hotel', 0, 800841 , '8:00','8:00');
+INSERT INTO OPERADOR VALUES(19, 'hotel paris', 'hotel', 0, 898456,  '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(20, 'sheraton', 'hotel', 0, 898456,  '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(21, 'hotel mediterraneo', 'hotel', 0, 898452,  '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(22, 'hostal Bakano', 'hostal', 0,45634, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(23, 'la candelaria hostel', 'hostal', 0, 984533, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(24, 'chorro de quevedo', 'hostal', 0, 877056, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(25, 'yepeto hostal', 'hostal', 0, 898456, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(26, 'city U', 'viviendaU', 0, 198456, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(27, 'esstudia', 'viviendaU', 0, 123563, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(28, 'livinnbogita', 'viviendaU', 0, 098463, '8:00','8:00' );
+INSERT INTO OPERADOR VALUES(29, 'dormitorios loft', 'viviendaU', 0, 554456, '8:00','8:00' );
 --datos de los clientes
 INSERT INTO CLIENTE VALUES(1077975782, 'fernando romero', 'estudiante'); 
 INSERT INTO CLIENTE VALUES(1077975780, 'Luis Colmenares', 'estudiante'); 

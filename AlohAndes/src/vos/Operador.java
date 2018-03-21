@@ -87,13 +87,11 @@ public class Operador
 
 	public String getHoraInicial() {
 
-		
 		return horaInicial;
 	}
 	public String getHoraFinal() {
 		return horaFinal;
 	}
-
 
 	public void setHoraInicial(String horaInicial) {
 		this.horaInicial = horaInicial;

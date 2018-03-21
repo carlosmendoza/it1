@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
 import vos.Cliente;
 
 
@@ -49,20 +51,23 @@ public class DAOCliente {
 		 *             - Cualquier error que no corresponda a la base de datos
 		 */
 		public ArrayList<Cliente> getClientes() throws SQLException, Exception {
+			
+			
 			ArrayList<Cliente> clientes = new ArrayList<Cliente>();
 
 			String sql = "SELECT * FROM CLIENTE";
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
-			ResultSet rs = prepStmt.executeQuery();
-
+			ResultSet rs = prepStmt.executeQuery(sql);
+			//System.err.println(rs.next());
 			while (rs.next()) {
-				int id = rs.getInt("id");
+				System.out.println("WHILE MALDITA  SEA");
+				System.out.println("CLIENTE");
 				String nombre = rs.getString("nombre");
 				int documento = rs.getInt("documento");
 				String rol = rs.getString("rol");
-				clientes.add(new Cliente(id, nombre, documento, rol));
+				clientes.add(new Cliente( nombre, documento, rol));
 			}
 			return clientes;
 		}
@@ -81,7 +86,7 @@ public class DAOCliente {
 		 */
 		public Cliente buscarClientePorId(int id) throws SQLException {
 		Cliente cliente = null;
-		String sql = "SELECT * FROM CLIENTE WHERE id =" + id;
+		String sql = "SELECT * FROM CLIENTE WHERE documento =" + id;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -93,7 +98,7 @@ public class DAOCliente {
 			String nombre = rs.getString("nombre");
 			int documento = rs.getInt("documento");
 			String rol = rs.getString("rol");
-			cliente = new Cliente(id, nombre, documento, rol);
+			cliente = new Cliente(nombre, documento, rol);
 		}
 
 		return cliente;
@@ -101,11 +106,13 @@ public class DAOCliente {
 
 
 		public void addCliente(Cliente cliente) throws SQLException {
-			String sql = "INSERT INTO CLIENTE VALUES ('";
-			sql += cliente.getId() + "','";
+			String sql = "INSERT INTO CLIENTE VALUES (";
+			
+			sql += cliente.getDocumento() + ",'";
 			sql += cliente.getNombre() + "','";
-			sql += cliente.getDocumento() + "','";
+			
 			sql += cliente.getRol() + "')";
+			System.out.println(sql);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -116,10 +123,10 @@ public class DAOCliente {
 
 		public void updateCliente(Cliente cliente) throws SQLException {
 			String sql = "UPDATE CLIENTE SET ";
-			sql += "NOMBRE ='" + cliente.getNombre() + "',";
-			sql += "DOCUMENTO = " + cliente.getDocumento() + ",";
+			sql += "NOMBRE ='" + cliente.getNombre() + "', ";
+			
 			sql += "ROL = '" + cliente.getRol() + "'";
-			sql += "WHERE ID=" + cliente.getId();
+			sql += "WHERE DOCUMENTO=" + cliente.getDocumento(); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -131,7 +138,7 @@ public class DAOCliente {
 		public void deleteCliente(Cliente cliente) throws SQLException {
 
 			String sql = "DELETE FROM CLIENTE";
-			sql += " WHERE ID = " + cliente.getId();
+			sql += " WHERE DOCUMENTO = " + cliente.getDocumento();
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -139,4 +146,6 @@ public class DAOCliente {
 			
 		}
 
+
+		
 }
