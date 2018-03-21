@@ -70,6 +70,10 @@ public class Oferta {
 		// TODO Auto-generated method stub
 		return capacidadReal;
 	}
+	public void setCapacidadReal(int capacidadReal) {
+		// TODO Auto-generated method stub
+		this.capacidadReal = capacidadReal;
+	}
 
 	
 	

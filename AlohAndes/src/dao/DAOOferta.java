@@ -73,10 +73,11 @@ public class DAOOferta {
 
 		while (rs.next()) {
 			int id = rs.getInt("id");
+			int capacidadReal = rs.getInt("capacidadReal");
 			double costo= rs.getDouble("costo");
-			boolean disponibilidad = rs.getBoolean("disponibilidad");
+			int disponibilidad = rs.getInt("disponibilidad");
 			int idOperador = rs.getInt("idOperador");
-			ofertas.add(new Oferta(id, costo, disponibilidad, idOperador));
+			ofertas.add(new Oferta(id, idOperador, capacidadReal, costo, disponibilidad));
 		}
 		return ofertas;
 	}
@@ -105,10 +106,11 @@ public class DAOOferta {
 	if (rs.next()) {
 		
 		double costo= rs.getDouble("costo");
-		boolean disponibilidad = rs.getBoolean("disponibilidad");
+		int capacidadReal= rs.getInt("capacidadReal");
+		int disponibilidad = rs.getInt("disponibilidad");
 		int idOperador = rs.getInt("idOperador");
 		
-		oferta = new Oferta(id, costo, disponibilidad, idOperador);
+		oferta = new Oferta(id, idOperador, capacidadReal, costo, disponibilidad);
 	}
 
 	return oferta;
@@ -120,6 +122,7 @@ public class DAOOferta {
 		sql += oferta.getId() + ",";
 		sql += oferta.getIdOperador() + ",";
 		sql += oferta.getCosto() + ",";
+		sql += oferta.getCapacidadReal()+",";
 		sql += oferta.getDisponibilidad() + ")";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -131,8 +134,9 @@ public class DAOOferta {
 
 	public void updateOferta(Oferta Oferta) throws SQLException {
 		String sql = "UPDATE OFERTA SET ";
-		sql += "COSTO ='" + Oferta.getCosto() + "',";	
-		sql += "DISPONIBILIDAD = '" + Oferta.isDisponibilidad() + "'";
+		sql += "COSTO =" + Oferta.getCosto() + ",";	
+		sql += "CAPACIDADREAL =" + Oferta.getCosto() + ",";	
+		sql += "DISPONIBILIDAD = " + Oferta.getDisponibilidad() + "";
 		sql += "WHERE ID=" + Oferta.getId() + "";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
