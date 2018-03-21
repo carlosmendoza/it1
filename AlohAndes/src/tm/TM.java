@@ -12,10 +12,12 @@ import dao.DAOCliente;
 import dao.DAOInmueble;
 import dao.DAOOferta;
 import dao.DAOOperador;
+import dao.DAOReserva;
 import vos.Cliente;
 import vos.Inmueble;
 import vos.Oferta;
 import vos.Operador;
+import vos.Reserva;
 
 
 public class TM {
@@ -544,6 +546,103 @@ public class TM {
 			}
 		}
 		return inmueble;
+	}
+
+
+	public List<Reserva> getAllReservas() throws Exception {
+		List<Reserva> reservas;
+		DAOReserva daoReserva = new DAOReserva();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			reservas = daoReserva.darReservas();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return reservas;
+	}
+
+
+	public Reserva darReservaPorId(int id) throws SQLException {
+		Reserva reserva;
+		DAOReserva daoReserva = new DAOReserva();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			reserva = daoReserva.buscarReservaPorId(id);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return reserva;
+	}
+
+
+	public void addReserva(Reserva reserva) throws SQLException {
+		DAOReserva daoReserva = new DAOReserva();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			daoReserva.addReserva(reserva);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
 	}
 
 
