@@ -62,7 +62,7 @@ public class DAOReserva {
 	public ArrayList<Reserva> darReservas() throws SQLException, Exception {
 		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
-		String sql = "SELECT * FROM ReservaS";
+		String sql = "SELECT * FROM Reserva";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -70,11 +70,12 @@ public class DAOReserva {
 
 		while (rs.next()) {
 			int id = rs.getInt("id");
-			String estado = rs.getString("nombre");
+			int idCliente = rs.getInt("idCliente");
+			int idOferta = rs.getInt("idOferta");
 			Date fechaInicial = rs.getDate("fechaInicial");
 			Date fechaFinal = rs.getDate("fechaFinal");
 
-			reservas.add(new Reserva(id, estado, (java.sql.Date) fechaInicial, (java.sql.Date) fechaFinal ));
+			reservas.add(new Reserva(id, idCliente, idOferta, (java.sql.Date) fechaInicial, (java.sql.Date) fechaFinal ));
 		}
 		return reservas;
 	}
@@ -102,11 +103,12 @@ public class DAOReserva {
 	
 
 	if (rs.next()) {
-		
-		String estado = rs.getString("nombre");
+		int idCliente = rs.getInt("idCliente");
+		int idOferta = rs.getInt("idOferta");
+	
 		Date fechaInicial = rs.getDate("fechaInicial");
 		Date fechaFinal = rs.getDate("fechaFinal");
-		Reserva = new Reserva(id, estado, (java.sql.Date) fechaInicial, (java.sql.Date) fechaFinal );
+		Reserva = new Reserva(id,idCliente, idOferta,  (java.sql.Date) fechaInicial, (java.sql.Date) fechaFinal );
 	}
 
 	return Reserva;
@@ -114,9 +116,10 @@ public class DAOReserva {
 	
 	
 	public void addReserva(Reserva reserva) throws SQLException {
-		String sql = "INSERT INTO RESERVA VALUES ('";
-		sql += reserva.getId() + "','";
-		sql += reserva.getEstado() + "','";
+		String sql = "INSERT INTO RESERVA VALUES (";
+		sql += reserva.getId() + ",";
+		sql += reserva.getIdCliente() + ",";
+		sql += reserva.getIdOferta() + ",";
 		sql += reserva.getFechaInicial() + "','";
 		sql += reserva.getFechaFinal() + "')";
 
@@ -124,21 +127,11 @@ public class DAOReserva {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
-	}
-
-
-	public void updateReserva(Reserva reserva) throws SQLException {
-		String sql = "UPDATE RESERVA SET ";
-		sql += "ESTADO ='" + reserva.getEstado() + "',";
-		sql += "FECHAINICIAL = " + reserva.getFechaInicial() + ",";
-		sql += "FECHAINICIAL = " + reserva.getFechaFinal() + ",";
-		sql += "WHERE ID=" + reserva.getId() + "";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+		
 		
 	}
+
+
 	
 	public void eliminarReserva(Reserva serv) throws SQLException {
 

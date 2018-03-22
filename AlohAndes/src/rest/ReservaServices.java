@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -79,6 +80,21 @@ public class ReservaServices {
 		TM tm = new TM(getPath());
 		try {
 			tm.addReserva(reserva);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(reserva).build();
+	}
+	
+	@DELETE
+	@Path("idReserva/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public Response deleteReserva(Reserva reserva) {
+		TM tm = new TM(getPath());
+		try {
+			tm.borrarReserva(reserva);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}

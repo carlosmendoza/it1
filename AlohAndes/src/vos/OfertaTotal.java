@@ -41,7 +41,7 @@ public class OfertaTotal {
 	
 	public OfertaTotal(@JsonProperty(value="idOferta") int idOferta , @JsonProperty(value="idOperador") int idOperador,@JsonProperty(value="capacidadReal") int capacidadReal,
 			@JsonProperty(value="costo") double costo, 
-	@JsonProperty(value="disponibilidad") int disponibilidad, @JsonProperty(value="disponibilidad") int idInmueble, @JsonProperty(value="tipo") String tipo,@JsonProperty(value="categoria") String categoria
+	@JsonProperty(value="disponibilidad") int disponibilidad, @JsonProperty(value="idInmueble") int idInmueble, @JsonProperty(value="tipo") String tipo,@JsonProperty(value="categoria") String categoria
 	, @JsonProperty(value="tamanio")int tamanio, @JsonProperty(value="ubicacion") String ubicacion, @JsonProperty(value="servicios") String servicios)
 	{
 		this.idOferta = idOferta;

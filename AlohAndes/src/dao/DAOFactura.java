@@ -77,41 +77,14 @@ public class DAOFactura {
 			int id = rs.getInt("id");
 			double valor = rs.getDouble("valor");
 			Date fecha = rs.getDate("fecha");
-			facturas.add(new Factura(id, valor, (java.sql.Date) fecha));
+			int idOferta = rs.getInt("idOferta");
+			facturas.add(new Factura(id, valor, (java.sql.Date) fecha, idOferta));
 		}
 		return facturas;
 	}
 
 
-	/**
-	 * Metodo que, usando la conexión a la base de datos, un 
-	 * Factura de la base de datos 
-	 * <b>SQL Statement:</b> SELECT * FROM Factura WHERE ID=id
-	 * 
-	 * @return Factura con id dado por parametro
-	 * @throws SQLException
-	 *             - Cualquier error que la base de datos arroje.
-	 * @throws Exception
-	 *             - Cualquier error que no corresponda a la base de datos
-	 */
-	public Factura buscarFacturaPorId(int id) throws SQLException {
-	Factura factura = null;
-	String sql = "SELECT * FROM Factura WHERE id =" + id;
 
-	PreparedStatement prepStmt = conn.prepareStatement(sql);
-	recursos.add(prepStmt);
-	ResultSet rs = prepStmt.executeQuery();
-	
-
-	if (rs.next()) {
-		
-		Date fecha = rs.getDate("fecha");
-		double valor = rs.getDouble("valor");
-		factura = new Factura(id, valor, (java.sql.Date) fecha);
-	}
-
-	return factura;
-}
 
 
 	public void addFactura(Factura Factura) throws SQLException {

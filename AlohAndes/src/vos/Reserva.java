@@ -8,8 +8,12 @@ public class Reserva {
 	@JsonProperty(value="id")
 	private int id;
 	
-	@JsonProperty(value="estado")
-	private String estado;
+	@JsonProperty(value="id")
+	private int idCliente;
+	
+	@JsonProperty(value="id")
+	private int idOferta;
+	
 	
 	@JsonProperty(value="fechaInicial")
 	private Date fechaInicial;
@@ -17,12 +21,13 @@ public class Reserva {
 	@JsonProperty(value="fechaFinal")
 	private Date fechaFinal;
 	
-	public Reserva (@JsonProperty(value="id")int id, @JsonProperty(value="estado") String estado, @JsonProperty(value="fechaInicial") Date fechaInicial, 
+	public Reserva (@JsonProperty(value="id")int id,@JsonProperty(value="idCliente")int idCliente,@JsonProperty(value="idOferta")int idOferta, @JsonProperty(value="fechaInicial") Date fechaInicial, 
 			@JsonProperty(value="fechaFinal")Date fechaFinal)
 	{
 		
 		this.id = id;
-		this.estado = estado;
+		this.idCliente = idCliente;
+		this.idOferta = idOferta;
 		this.fechaInicial = fechaInicial;
 		this.fechaFinal = fechaFinal;
 	}
@@ -35,13 +40,7 @@ public class Reserva {
 		this.id = id;
 	}
 
-	public String getEstado() {
-		return estado;
-	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
 
 	public Date getFechaInicial() {
 		return fechaInicial;
@@ -57,6 +56,22 @@ public class Reserva {
 
 	public void setFechaFinal(Date fechaFinal) {
 		this.fechaFinal = fechaFinal;
+	}
+
+	public int getIdCliente() {
+		return idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public int getIdOferta() {
+		return idOferta;
+	}
+
+	public void setIdOferta(int idOferta) {
+		this.idOferta = idOferta;
 	}
 
 }

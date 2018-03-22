@@ -126,33 +126,36 @@ public class DAOOfertaTotal {
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
+		System.out.println(sql);
 		prepStmt.executeQuery();
 		
 		String sql2 = "INSERT INTO INMUEBLE VALUES (";
-		sql += ofertaTotal.getIdInmueble() + ",";
-		sql += ofertaTotal.getIdOperador() + ",";
-		sql += ofertaTotal.getCapacidadReal() + ",";
-		sql += ofertaTotal.getCosto()+",";
-		sql += ofertaTotal.getDisponibilidad() + ")";
+		sql2 += ofertaTotal.getIdInmueble() + ",";
+		sql2 += ofertaTotal.getIdOferta() + ",'";
+		sql2 += ofertaTotal.getTipo() + "','";
+		sql2 += ofertaTotal.getCategoria() + "',";
+		sql2 += ofertaTotal.getTamanio() + ",'";
+		sql2 += ofertaTotal.getUbicacion() + "')";
 		
 		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
 		recursos.add(prepStmt2);
+		System.out.println(sql2);
 		prepStmt2.executeQuery();
 		
+		System.out.println("llega3");
+		String listaServicios = ofertaTotal.getServicios().split("-")[0];
 		
-		String[] listaServicios = ofertaTotal.getServicios().split("-");
-		int i =0;
-		while(i<= listaServicios.length)
-		{
+		System.out.println("llega2");
 			String sql3 = "INSERT INTO PRESTAN VALUES (";
-			sql += ofertaTotal.getIdOferta() + ",";
-			sql += listaServicios[i];
+			sql3 += ofertaTotal.getIdOferta() + ",";
+			sql3 += listaServicios+")";
 			
 			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
 			recursos.add(prepStmt3);
+			
 			prepStmt3.executeQuery();
-			i=i++;
-		}
+			
+			
 		
 	}
 

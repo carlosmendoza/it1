@@ -67,22 +67,7 @@ public class InmuebleServices {
 	}
 	
 	
-	
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	
-	public Response addOferta(Oferta oferta) {
-		TM tm = new TM(getPath());
-		try {
-			tm.addOferta(oferta);
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(oferta).build();
-	}
-	
+
 	
 
 }

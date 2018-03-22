@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import tm.TM;
 import vos.Oferta;
+import vos.OfertaTotal;
 
 
 @Path("ofertas")
@@ -92,7 +93,7 @@ public class OfertaServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	
-	public Response addOferta(Oferta oferta) {
+	public Response addOferta(OfertaTotal oferta) {
 		TM tm = new TM(getPath());
 		try {
 			tm.addOferta(oferta);

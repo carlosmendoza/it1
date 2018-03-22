@@ -10,18 +10,24 @@ public class Factura {
 	@JsonProperty(value="id")
 	private int id;
 	
+	@JsonProperty(value="idReserva")
+	private int idReserva;
+	
 	@JsonProperty(value="valor")
 	private double valor;
 	
 	@JsonProperty(value="fecha")
 	private Date fecha;
 	
-	public Factura(@JsonProperty(value="id") int id, @JsonProperty(value="valor") double valor, @JsonProperty(value="fecha") Date fecha
+	public Factura(@JsonProperty(value="id") int id, @JsonProperty(value="valor") double valor, @JsonProperty(value="fecha") Date fecha,
+			@JsonProperty(value="idReserva") int idReserva
 	 )
 	{
 		this.id = id;
 		this.valor = valor;
 		this.fecha = fecha;
+		this.idReserva = idReserva;
+		
 	}
 
 	public int getId() {
@@ -46,5 +52,13 @@ public class Factura {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public int getIdReserva() {
+		return idReserva;
+	}
+
+	public void setIdReserva(int idReserva) {
+		this.idReserva = idReserva;
 	}
 }
