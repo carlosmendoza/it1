@@ -642,6 +642,38 @@ public class TM {
 	}
 
 
+	public void deleteOferta(Oferta oferta) throws SQLException {
+
+		DAOOferta daoOferta = new DAOOferta();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			daoOferta.deleteOferta(oferta);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+
 
 
 

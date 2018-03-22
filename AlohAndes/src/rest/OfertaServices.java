@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,7 +14,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import tm.TM;
-import vos.Cliente;
 import vos.Oferta;
 
 
@@ -37,7 +37,6 @@ public class OfertaServices {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getOfertas() {
-		System.out.println("metodo get ofertas services");
 		TM tm = new TM(getPath());
 		List<Oferta> ofertas;
 		try {
@@ -97,12 +96,25 @@ public class OfertaServices {
 		TM tm = new TM(getPath());
 		try {
 			tm.addOferta(oferta);
+			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(oferta).build();
 	}
 	
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteOferta(Oferta oferta) {
+		TM tm = new TM(getPath());
+		try {
+			tm.deleteOferta(oferta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(oferta).build();
+	}
 	
 	
 	

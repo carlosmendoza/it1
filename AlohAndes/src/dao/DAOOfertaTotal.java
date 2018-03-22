@@ -7,9 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.Oferta;
+import vos.OfertaTotal;
 
-public class DAOOferta {
-
+public class DAOOfertaTotal {
+	
 	/**
 	 * Arraylits de recursos que se usan para la ejecuci�n de sentencias SQL
 	 */
@@ -46,16 +47,16 @@ public class DAOOferta {
 	/**
 	 * constructor de la clase
 	 */
-	public DAOOferta() {
+	public DAOOfertaTotal() {
 		recursos = new ArrayList<Object>();
 	}
 	
 	/**
 	 * Metodo que, usando la conexi�n a la base de datos, saca todos los
-	 * Ofertas de la base de datos 
-	 * <b>SQL Statement:</b> SELECT * FROM Oferta
+	 * OfertaTotals de la base de datos 
+	 * <b>SQL Statement:</b> SELECT * FROM OfertaTotal
 	 * 
-	 * @return Arraylist con los OfertaS de la base de datos.
+	 * @return Arraylist con los OfertaTotalS de la base de datos.
 	 * @throws SQLException
 	 *             - Cualquier error que la base de datos arroje.
 	 * @throws Exception
@@ -63,8 +64,6 @@ public class DAOOferta {
 	 */
 	public ArrayList<Oferta> getOfertas() throws SQLException, Exception {
 		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
-
-		System.out.println("metodo get ofertas dao");
 		String sql = "SELECT * FROM OFERTA";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -85,10 +84,10 @@ public class DAOOferta {
 
 	/**
 	 * Metodo que, usando la conexi�n a la base de datos, un 
-	 * Oferta de la base de datos 
-	 * <b>SQL Statement:</b> SELECT * FROM Oferta WHERE ID=id
+	 * OfertaTotal de la base de datos 
+	 * <b>SQL Statement:</b> SELECT * FROM OfertaTotal WHERE ID=id
 	 * 
-	 * @return Oferta con id dado por parametro
+	 * @return OfertaTotal con id dado por parametro
 	 * @throws SQLException
 	 *             - Cualquier error que la base de datos arroje.
 	 * @throws Exception
@@ -117,43 +116,57 @@ public class DAOOferta {
 }
 
 
-	public void addOferta(Oferta oferta) throws SQLException {
+	public void addOferta(OfertaTotal ofertaTotal) throws SQLException {
 		String sql = "INSERT INTO Oferta VALUES (";
-		sql += oferta.getId() + ",";
-		sql += oferta.getIdOperador() + ",";
-		sql += oferta.getCapacidadReal() + ",";
-		sql += oferta.getCosto()+",";
-		sql += oferta.getDisponibilidad() + ")";
+		sql += ofertaTotal.getIdOferta() + ",";
+		sql += ofertaTotal.getIdOperador() + ",";
+		sql += ofertaTotal.getCapacidadReal() + ",";
+		sql += ofertaTotal.getCosto()+",";
+		sql += ofertaTotal.getDisponibilidad() + ")";
 		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
-	}
-
-
-	public void updateOferta(Oferta Oferta) throws SQLException {
-		String sql = "UPDATE OFERTA SET ";
-		sql += "COSTO =" + Oferta.getCosto() + ",";	
-		sql += "CAPACIDADREAL =" + Oferta.getCosto() + ",";	
-		sql += "DISPONIBILIDAD = " + Oferta.getDisponibilidad() + "";
-		sql += "WHERE ID=" + Oferta.getId() + "";
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+		String sql2 = "INSERT INTO INMUEBLE VALUES (";
+		sql += ofertaTotal.getIdInmueble() + ",";
+		sql += ofertaTotal.getIdOperador() + ",";
+		sql += ofertaTotal.getCapacidadReal() + ",";
+		sql += ofertaTotal.getCosto()+",";
+		sql += ofertaTotal.getDisponibilidad() + ")";
+		
+		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+		recursos.add(prepStmt2);
+		prepStmt2.executeQuery();
+		
+		
+		String[] listaServicios = ofertaTotal.getServicios().split("-");
+		int i =0;
+		while(i<= listaServicios.length)
+		{
+			String sql3 = "INSERT INTO PRESTAN VALUES (";
+			sql += ofertaTotal.getIdOferta() + ",";
+			sql += listaServicios[i];
+			
+			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+			recursos.add(prepStmt3);
+			prepStmt3.executeQuery();
+			i=i++;
+		}
 		
 	}
 
 
-	public void deleteOferta(Oferta oferta) throws SQLException {
+
+	public void deleteOfertaTotal(OfertaTotal oferta) throws SQLException {
 
 		String sql = "DELETE FROM OFERTA";
-		sql += " WHERE ID = " + oferta.getId();
+		sql += " WHERE ID = " + oferta.getIdOferta();
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
 	}
+
 }

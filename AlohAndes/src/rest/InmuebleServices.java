@@ -67,25 +67,7 @@ public class InmuebleServices {
 	}
 	
 	
-	@GET
-	@Path("idOperdador/{idO}")
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getOfertaPorOperador(@PathParam("idO") String idOperador) {
-
-		TM tm = new TM(getPath());
-		List<Oferta> ofertas;
-		try {
-			if (idOperador == null || idOperador.length() == 0)
-				throw new Exception("Id del operador no valido");
-			else
-			{
-			ofertas= tm.darOfertasPorOperador(Integer.parseInt(idOperador));
-			}
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(ofertas).build();
-	}
+	
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
