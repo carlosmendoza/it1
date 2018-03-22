@@ -105,16 +105,16 @@ public class OfertaServices {
 	}
 	
 	@DELETE
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response deleteOferta(Oferta oferta) {
+	@Path("idOferta/{id}")
+	
+	public void deleteOferta(@PathParam("id") int idOferta) {
 		TM tm = new TM(getPath());
 		try {
-			tm.deleteOferta(oferta);
+			tm.deleteOferta(idOferta);
 		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
+			
 		}
-		return Response.status(200).entity(oferta).build();
+		
 	}
 	
 	

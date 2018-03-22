@@ -146,10 +146,10 @@ public class DAOOferta {
 	}
 
 
-	public void deleteOferta(Oferta oferta) throws SQLException {
+	public void deleteOferta(int id) throws SQLException {
 
 		String sql = "DELETE FROM OFERTA";
-		sql += " WHERE ID = " + oferta.getId();
+		sql += " WHERE ID = " + id;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

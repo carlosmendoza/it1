@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 import dao.DAOCliente;
+import dao.DAODinero;
 import dao.DAOFactura;
 import dao.DAOInmueble;
 import dao.DAOOferta;
@@ -16,6 +17,7 @@ import dao.DAOOfertaTotal;
 import dao.DAOOperador;
 import dao.DAOReserva;
 import vos.Cliente;
+import vos.DineroProv;
 import vos.Factura;
 import vos.Inmueble;
 import vos.Oferta;
@@ -646,14 +648,14 @@ public class TM {
 	}
 
 
-	public void deleteOferta(Oferta oferta) throws SQLException {
+	public void deleteOferta(int id) throws SQLException {
 
 		DAOOferta daoOferta = new DAOOferta();
 		try {
 			////// transaccion
 			this.conn = darConexion();
 			daoOferta.setConn(conn);
-			daoOferta.deleteOferta(oferta);
+			daoOferta.deleteOferta(id);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
@@ -773,6 +775,39 @@ public class TM {
 		}
 		
 		
+	}
+
+
+	public List<DineroProv> getDineroR() throws Exception {
+		List<DineroProv> clientes;
+		DAODinero daoCliente = new DAODinero();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoCliente.setConn(conn);
+			clientes = daoCliente.darDineroProv();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoCliente.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return clientes;
 	}
 
 
