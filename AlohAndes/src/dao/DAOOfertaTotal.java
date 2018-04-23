@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import vos.IndiceOcupacion;
 import vos.Oferta;
 import vos.OfertaTotal;
 
@@ -116,50 +118,82 @@ public class DAOOfertaTotal {
 }
 
 
-	public void addOferta(OfertaTotal ofertaTotal) throws SQLException {
-		String sql = "INSERT INTO Oferta VALUES (";
-		sql += ofertaTotal.getIdOferta() + ",";
-		sql += ofertaTotal.getIdOperador() + ",";
-		sql += ofertaTotal.getCapacidadReal() + ",";
-		sql += ofertaTotal.getCosto()+",";
-		sql += ofertaTotal.getDisponibilidad() + ")";
-		
+//	public void addOferta(OfertaTotal ofertaTotal) throws SQLException {
+//		String sql = "INSERT INTO Oferta VALUES (";
+//		sql += ofertaTotal.getIdOferta() + ",";
+//		sql += ofertaTotal.getIdOperador() + ",";
+//		sql += ofertaTotal.getCapacidadReal() + ",";
+//		sql += ofertaTotal.getCosto()+",";
+//		sql += ofertaTotal.getDisponibilidad() + ")";
+//		
+//		PreparedStatement prepStmt = conn.prepareStatement(sql);
+//		recursos.add(prepStmt);
+//		System.out.println(sql);
+//		prepStmt.executeQuery();
+//		
+//		String sql2 = "INSERT INTO INMUEBLE VALUES (";
+//		sql2 += ofertaTotal.getIdInmueble() + ",";
+//		sql2 += ofertaTotal.getIdOferta() + ",'";
+//		sql2 += ofertaTotal.getTipo() + "','";
+//		sql2 += ofertaTotal.getCategoria() + "',";
+//		sql2 += ofertaTotal.getTamanio() + ",'";
+//		sql2 += ofertaTotal.getUbicacion() + "')";
+//		
+//		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+//		recursos.add(prepStmt2);
+//		System.out.println(sql2);
+//		prepStmt2.executeQuery();
+//		
+//		System.out.println("llega3");
+//		String listaServicios = ofertaTotal.getServicios().split("-")[0];
+//		
+//		System.out.println("llega2");
+//			String sql3 = "INSERT INTO PRESTAN VALUES (";
+//			sql3 += ofertaTotal.getIdOferta() + ",";
+//			sql3 += listaServicios+")";
+//			
+//			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+//			recursos.add(prepStmt3);
+//			
+//			prepStmt3.executeQuery();
+//			
+//			
+//		
+//	}
+
+	public List<IndiceOcupacion> darIndiceDeOcupacion() throws SQLException
+	{
+		ArrayList<IndiceOcupacion> ofertas = new ArrayList<>();
+		String sql = "select operador.nombre, count(*) as numofertas from operador inner join oferta on oferta.idoperador = operador.id group by operador.nombre";
+		String sql2 = "select operador.nombre, count(*) as numreservadas from operador inner join oferta on oferta.idoperador = operador.id where oferta.disponibilidad=0 group by operador.nombre";
+
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
-		System.out.println(sql);
-		prepStmt.executeQuery();
-		
-		String sql2 = "INSERT INTO INMUEBLE VALUES (";
-		sql2 += ofertaTotal.getIdInmueble() + ",";
-		sql2 += ofertaTotal.getIdOferta() + ",'";
-		sql2 += ofertaTotal.getTipo() + "','";
-		sql2 += ofertaTotal.getCategoria() + "',";
-		sql2 += ofertaTotal.getTamanio() + ",'";
-		sql2 += ofertaTotal.getUbicacion() + "')";
-		
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			String nombre = rs.getString("nombre");
+			int numOfertas = rs.getInt("numOfertas");
+			ofertas.add(new IndiceOcupacion(nombre, numOfertas,0));
+		}
 		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
 		recursos.add(prepStmt2);
-		System.out.println(sql2);
-		prepStmt2.executeQuery();
-		
-		System.out.println("llega3");
-		String listaServicios = ofertaTotal.getServicios().split("-")[0];
-		
-		System.out.println("llega2");
-			String sql3 = "INSERT INTO PRESTAN VALUES (";
-			sql3 += ofertaTotal.getIdOferta() + ",";
-			sql3 += listaServicios+")";
-			
-			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
-			recursos.add(prepStmt3);
-			
-			prepStmt3.executeQuery();
-			
-			
+		ResultSet rs2 = prepStmt2.executeQuery();
+		while (rs2.next()) {
+			String nombre2 = rs2.getString("nombre");
+			int numreservadas = rs2.getInt("numreservadas");
+			for(IndiceOcupacion io: ofertas)
+			{
+				if(nombre2.equals(io.getNombre()))
+				{
+					double porcentaje = (numreservadas*100)/io.getNumOfertas();
+					io.setPorcentajeO(porcentaje);
+				}
+			}
+		}
+		return ofertas;
 		
 	}
-
-
 
 	public void deleteOfertaTotal(OfertaTotal oferta) throws SQLException {
 

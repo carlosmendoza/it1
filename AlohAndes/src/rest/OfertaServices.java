@@ -14,6 +14,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import tm.TM;
+import vos.IndiceOcupacion;
 import vos.Oferta;
 import vos.OfertaTotal;
 
@@ -34,6 +35,19 @@ public class OfertaServices {
 	}
 	
 	// Se obtienen todas las ofertas de todos operadores
+	@GET
+	@Path("indicesDisponibilidad")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getIndicesDisponibilidad() {
+		TM tm = new TM(getPath());
+		List<IndiceOcupacion> ofertas;
+		try {
+			ofertas = tm.getIndicesOcupacion();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(ofertas).build();
+	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
