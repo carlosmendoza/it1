@@ -1,0 +1,53 @@
+{
+	"variables": [],
+	"info": {
+		"name": "OFERTAS",
+		"_postman_id": "22e4eb1d-ee9e-0379-0ef7-26d4c27e0389",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Oferta",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/ofertas/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idOferta\": 122141880,\n\t\"idOperador\":100,\n\t\"capacidadReal\": 3,\n\t\"costo\": 500560,\n\t\"disponibilidad\":0,\n\t\"idInmueble\": 500,\n    \"tipo\": \"apartamento\",\n\t\"categoria\": \"estandar\",\n    \"tamanio\": 75,\n    \"ubicacion\": \"Cl. 19 #572\",\n    \"servicios\": \"2000-2001-2002\"\n\t\n}\n"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET Ofertas",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/ofertas/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar oferta",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/ofertas/idOferta/123",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

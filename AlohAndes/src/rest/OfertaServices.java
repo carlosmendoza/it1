@@ -88,15 +88,43 @@ public class OfertaServices {
 		}
 		return Response.status(200).entity(ofertas).build();
 	}
+	@GET
+	@Path("ofertasPopulares")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getOfertasPopulares() {
+
+		TM tm = new TM(getPath());
+		List<OfertaTotal> o;
+		try {
+			o = tm.darOfertasPopulares();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(o).build();
+	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	
-	public Response addOferta(OfertaTotal oferta) {
+	public Response addOferta(Oferta oferta) {
 		TM tm = new TM(getPath());
 		try {
 			tm.addOferta(oferta);
+			
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(oferta).build();
+	}
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public Response addOfertaLista(List<Oferta> oferta) {
+		TM tm = new TM(getPath());
+		try {
+			tm.addOfertaLista(oferta);
 			
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

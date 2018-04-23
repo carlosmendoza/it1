@@ -1,0 +1,62 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RESERVAS",
+		"_postman_id": "80cec7c0-d91b-403a-5441-f967e883cddf",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get reservas",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar reserva",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"id\": 123,\n\"idCliente\": 1,\n\"idOferta\": \"123123\",\n\"costo\": \"100000\",\n\"fechaInicial\": \"2018-05-01 08:00:00\",\n\"fechaFinal\": \"2018-05-03 08:00:00\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar reserva",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/idReserva/123",
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,51 @@
+{
+	"variables": [],
+	"info": {
+		"name": "OPERADORES",
+		"_postman_id": "e91215c0-991e-9a28-feee-3b4b8b80068b",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get todos los operadores",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/operadores/",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":1234,\n \"tipo\": \"persona natural\",\n \"documento\":12345666,\n \"nit\": 0,\n \"horaInicial\":\"hi\",\n \"horaFinal\":\"hf\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST un operador",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/operadores/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": 123456,\n\t\"nombre\": \"nombreNuevo\",\n\t\"tipo\": \"hotel\",\n\t\"documento\":0,\n\t\"nit\": 123333,\n\t\"horaInicial\": \"8:00\",\n\t\"horaFinal\": \"10:00\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

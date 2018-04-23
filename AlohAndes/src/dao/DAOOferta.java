@@ -5,8 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.Oferta;
+import vos.OfertaTotal;
 
 public class DAOOferta {
 
@@ -155,5 +157,37 @@ public class DAOOferta {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 		
+	}
+
+	public void addOfertaLista(List<Oferta> oferta) throws SQLException {
+		
+		for (Oferta o: oferta)
+		{
+			addOferta(o);
+		}
+		
+	}
+
+	public List<OfertaTotal> getOfertasPopulares() throws SQLException {
+		ArrayList<OfertaTotal> ofertas = new ArrayList<OfertaTotal>();
+
+		String sql = "SELECT OFERTA.ID AS IDOFERTA, OFERTA.COSTO, OPERADOR.ID AS IDOPERADOR, INMUEBLE.ID AS IDINMUEBLE, INMUEBLE.TIPO, INMUEBLE.CATEGORIA, INMUEBLE.TAMANIO , INMUEBLE.UBICACION FROM OFERTA INNER JOIN INMUEBLE ON OFERTA.ID = INMUEBLE.IDOFERTA INNER JOIN RESERVA ON RESERVA.IDOFERTA = OFERTA.ID INNER JOIN FACTURA ON FACTURA.IDRESERVA = RESERVA.ID INNER JOIN OPERADOR ON OFERTA.IDOPERADOR= OPERADOR.ID;";
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) {
+			int id = rs.getInt("idOferta");
+			String tipo = rs.getString("tipo");
+			double costo= rs.getDouble("costo");
+			String categoria = rs.getString("categoria");
+			int idOperador = rs.getInt("idOperador");
+			int tamanio = rs.getInt("tamanio");
+			String ubicacion = rs.getString("ubicacion");
+			int idInmueble = rs.getInt("idInmueble");
+			ofertas.add(new OfertaTotal(id, idOperador, costo, idInmueble,tipo, categoria, tamanio, ubicacion));
+		}
+		return ofertas;
 	}
 }

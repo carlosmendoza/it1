@@ -86,6 +86,21 @@ public class ReservaServices {
 		return Response.status(200).entity(reserva).build();
 	}
 	
+
+//	@POST
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	
+//	public Response addReservaLista(List<Reserva> reservas) {
+//		TM tm = new TM(getPath());
+//		try {
+//			tm.addReservaLista(reservas);
+//		} catch (Exception e) {
+//			return Response.status(500).entity(doErrorMessage(e)).build();
+//		}
+//		return Response.status(200).entity(reservas).build();
+//	}
+	
 	@DELETE
 	@Path("idReserva/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)

@@ -13,7 +13,6 @@ import dao.DAODinero;
 import dao.DAOFactura;
 import dao.DAOInmueble;
 import dao.DAOOferta;
-import dao.DAOOfertaTotal;
 import dao.DAOOperador;
 import dao.DAOReserva;
 import vos.Cliente;
@@ -453,8 +452,8 @@ public class TM {
 	}
 
 
-	public void addOferta(OfertaTotal oferta) throws SQLException {
-		DAOOfertaTotal daoOferta = new DAOOfertaTotal();
+	public void addOferta(Oferta oferta) throws SQLException {
+		DAOOferta daoOferta = new DAOOferta();
 		try {
 			////// transaccion
 			this.conn = darConexion();
@@ -808,6 +807,114 @@ public class TM {
 			}
 		}
 		return clientes;
+	}
+
+//
+//	public void addReservaLista(List<Reserva> reservas) {
+//
+//		try {
+//			////// transaccion
+//			this.conn = darConexion();
+//			daoOferta.setConn(conn);
+//			clientes = daoCliente.darDineroProv();
+//
+//		} catch (SQLException e) {
+//			System.err.println("SQLException:" + e.getMessage());
+//			e.printStackTrace();
+//			throw e;
+//		} catch (Exception e) {
+//			System.err.println("GeneralException:" + e.getMessage());
+//			e.printStackTrace();
+//			throw e;
+//		} finally {
+//			try {
+//				daoCliente.cerrarRecursos();
+//				if (this.conn != null)
+//					this.conn.close();
+//			} catch (SQLException exception) {
+//				System.err.println("SQLException closing resources:" + exception.getMessage());
+//				exception.printStackTrace();
+//				throw exception;
+//			}
+//		}
+//		
+//		
+//	}
+
+
+	public void addOfertaLista(List<Oferta> oferta) throws SQLException {
+		// TODO Auto-generated method stub
+		DAOOferta dao = new DAOOferta();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			dao.setConn(conn);
+			dao.addOfertaLista(oferta);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				dao.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+	}
+
+
+	public List<OfertaTotal> darOfertasPopulares() {
+		List<OfertaTotal> ofertas = null;
+		DAOOferta daoOferta = new DAOOferta();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			ofertas = daoOferta.getOfertasPopulares();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			try {
+				throw e;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				try {
+					throw exception;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return ofertas;
 	}
 
 

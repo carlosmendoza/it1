@@ -1,0 +1,42 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CLIENTE",
+		"_postman_id": "29ec1fa5-55a7-48bd-0193-c2f73bf26297",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST Cliente",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/clientes",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n\t\"nombre\": \"nombrePrueba\",\n\t\"documento\": 12312,\n\t\"rol\": \"estudiante\"\n\t\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET CLIENTES",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/clientes",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

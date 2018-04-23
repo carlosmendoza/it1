@@ -11,14 +11,9 @@ public class OfertaTotal {
 	@JsonProperty(value="costo")
 	private double costo;
 
-	@JsonProperty(value="disponibilidad")
-	private  int disponibilidad;
 	
 	@JsonProperty(value="idOperador")
 	private int idOperador;
-	
-	@JsonProperty(value="capacidadReal")
-	private int capacidadReal;
 	
 	@JsonProperty(value="idInmueble")
 	private int idInmueble;
@@ -36,25 +31,20 @@ public class OfertaTotal {
 	@JsonProperty(value="ubicacion")
 	private String ubicacion;
 	
-	@JsonProperty(value="servicios")
-	private String servicios;
 	
-	public OfertaTotal(@JsonProperty(value="idOferta") int idOferta , @JsonProperty(value="idOperador") int idOperador,@JsonProperty(value="capacidadReal") int capacidadReal,
-			@JsonProperty(value="costo") double costo, 
-	@JsonProperty(value="disponibilidad") int disponibilidad, @JsonProperty(value="idInmueble") int idInmueble, @JsonProperty(value="tipo") String tipo,@JsonProperty(value="categoria") String categoria
-	, @JsonProperty(value="tamanio")int tamanio, @JsonProperty(value="ubicacion") String ubicacion, @JsonProperty(value="servicios") String servicios)
+	public OfertaTotal(@JsonProperty(value="idOferta") int idOferta , @JsonProperty(value="idOperador") int idOperador,
+			@JsonProperty(value="costo") double costo,  @JsonProperty(value="idInmueble") int idInmueble, @JsonProperty(value="tipo") String tipo,@JsonProperty(value="categoria") String categoria
+	, @JsonProperty(value="tamanio")int tamanio, @JsonProperty(value="ubicacion") String ubicacion)
 	{
 		this.idOferta = idOferta;
 		this.costo = costo;
-		this.disponibilidad = disponibilidad;
 		this.idOperador = idOperador;
-		this.capacidadReal = capacidadReal;
 		this.idInmueble = idInmueble;
 		this.tipo = tipo;
 		this.categoria = categoria;
 		this.tamanio = tamanio;
 		this.ubicacion = ubicacion;
-		this.servicios = servicios;
+	
 		
 	}
 
@@ -75,16 +65,7 @@ public class OfertaTotal {
 	}
 
 	
-	public int getDisponibilidad()
 	
-	{
-		return disponibilidad;
-	}
-
-	public void setDisponibilidad(int disponibilidad) {
-		this.disponibilidad = disponibilidad;
-	}
-
 	public int getIdOperador() {
 		return idOperador;
 	}
@@ -93,14 +74,7 @@ public class OfertaTotal {
 		this.idOperador = idOperador;
 	}
 
-	public int getCapacidadReal() {
-		// TODO Auto-generated method stub
-		return capacidadReal;
-	}
-	public void setCapacidadReal(int capacidadReal) {
-		// TODO Auto-generated method stub
-		this.capacidadReal = capacidadReal;
-	}
+	
 
 	public int getIdInmueble() {
 		return idInmueble;
@@ -142,12 +116,5 @@ public class OfertaTotal {
 		this.ubicacion = ubicacion;
 	}
 
-	public String getServicios() {
-		return servicios;
-	}
-
-	public void setServicios(String servicios) {
-		this.servicios = servicios;
-	}
 	
 }

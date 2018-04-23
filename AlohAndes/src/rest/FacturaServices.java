@@ -69,6 +69,20 @@ public class FacturaServices {
 		return Response.status(200).entity(o).build();
 	}
 	
+	@GET
+	@Path("RF1")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getGananciasProveedor() {
+		
+		TM tm = new TM(getPath());
+		List<Factura> facturas;
+		try {
+			facturas = tm.getAllFacturas();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(facturas).build();
+	}
 	
 	
 	
