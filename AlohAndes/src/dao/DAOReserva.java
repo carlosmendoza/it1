@@ -15,12 +15,12 @@ import vos.ReservaMasiva;
 public class DAOReserva {
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecuci�n de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexi�n a la base de datos
+	 * Atributo que genera la conexión a la base de datos
 	 */
 	private Connection conn;
 	
@@ -51,8 +51,194 @@ public class DAOReserva {
 		recursos = new ArrayList<Object>();
 	}
 	
+	
+		public ArrayList<Date>[] analizarOperaciones(String unidad, String tipoAloha) throws SQLException, ParseException
+	{
+		ArrayList<Date> parte1= new ArrayList<Date>();
+		ArrayList<Date> parte2= new ArrayList<Date>();
+		ArrayList<Date> parte3= new ArrayList<Date>();
+
+
+
+
+		//facturas(alojamientos ocupados) 
+		String sql="SELECT fc.* FROM FACTURA fc INNER JOIN RESERVA rs ON fc.RESERVAID= rs.ID  " + 
+				" INNER JOIN  OFERTA ofe ON ofe.ID=rs.IDOFERTA" + 
+				" INNER JOIN INMUEBLE inm ON inm.IDOFERTA = ofe.ID  " + 
+				" WHERE inm.TIPO= " + unidad;
+
+		//mayor demanda
+		String sql2="";
+		//menor ocupación
+		String sql3="";
+		//mayor ingreso
+		String sql4="";
+		if(tipoAloha.equalsIgnoreCase("YEAR"))
+		{
+			sql2="select conteo, año from (SELECT COUNT (*) as conteo, EXTRACT(year from fecha) as año " + 
+					"FROM ("+sql+")" + 
+					"group by  EXTRACT(year from fecha))" + 
+					"where(SELECT MAX(CONTEO)" + 
+					"FROM(SELECT COUNT (*) as conteo, EXTRACT(year from fecha) as año" + 
+					"FROM (" +sql + ")"+
+					"group by EXTRACT(year from fecha)))=conteo;";
+
+			sql3="select conteo, año from (SELECT COUNT (*) as conteo, EXTRACT(year from fecha) as año " + 
+					"FROM ("+sql+")" + 
+					"group by  EXTRACT(year from fecha))" + 
+					"where(SELECT MIN(CONTEO)" + 
+					"FROM(SELECT COUNT (*) as conteo, EXTRACT(year from fecha) as año" + 
+					"FROM (" +sql + ")"+
+					"group by EXTRACT(year from fecha)))=conteo;";
+
+			sql4="select precion, año from (SELECT SUM (VALOR) as PRECIO, EXTRACT(year from fecha) as año " + 
+					"FROM ("+sql+")" + 
+					"group by  EXTRACT(year from fecha))" + 
+					"where(SELECT MAX(PRECIO)" + 
+					"FROM(SELECT SUM (VALOR) as PRECIO, EXTRACT(year from fecha) as año" + 
+					"FROM (" +sql + ")"+
+					"group by EXTRACT(year from fecha)))=PRECIO;";
+
+		
+
+			PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+			recursos.add(prepStmt2);
+			prepStmt2.executeQuery();
+
+			ResultSet rs2 = prepStmt2.executeQuery();
+
+			while (rs2.next()) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String año = rs2.getString("año");
+				String tf=año+"-01-01";
+				Date fecha=null;
+
+				fecha = sdf.parse(tf);
+				parte1.add(fecha);
+			}
+
+			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+			recursos.add(prepStmt3);			    
+			rs2 = prepStmt3.executeQuery();
+
+			while (rs2.next()) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String año = rs2.getString("año");
+				String tf=año+"-01-01";
+				Date fecha=null;
+				fecha = sdf.parse(tf);
+				parte2.add(fecha);
+			}
+			
+			PreparedStatement prepStmt4 = conn.prepareStatement(sql4);
+			recursos.add(prepStmt4);
+			rs2 = prepStmt4.executeQuery();
+			
+			while (rs2.next()) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String año = rs2.getString("año");
+				String tf=año+"-01-01";
+				Date fecha=null;
+
+				fecha = sdf.parse(tf);
+				parte3.add(fecha);
+			}
+		}
+		else if(tipoAloha.equalsIgnoreCase("MONTH"))
+		{
+			sql2="select conteo, mes, año from (SELECT COUNT (*) as conteo,   EXTRACT( MONTH from fecha) as mes, EXTRACT(year from fecha) as año " + 
+					"FROM ("+sql+")" + 
+					"group by EXTRACT(MONTH from fecha), EXTRACT(year from fecha))" + 
+					"where(SELECT MAX(CONTEO)" + 
+					"FROM(SELECT COUNT (*) as conteo,   EXTRACT( MONTH from fecha) as mes, EXTRACT(year from fecha) as año" + 
+					"FROM (" +sql + ")"+
+					"group by EXTRACT(MONTH from fecha), EXTRACT(year from fecha)))=conteo;";
+
+			sql3="select conteo, mes, año from (SELECT COUNT (*) as conteo,   EXTRACT( MONTH from fecha) as mes, EXTRACT(year from fecha) as año " + 
+					"FROM ("+sql+")" + 
+					"group by EXTRACT(MONTH from fecha), EXTRACT(year from fecha))" + 
+					"where(SELECT MIN(CONTEO)" + 
+					"FROM(SELECT COUNT (*) as conteo,   EXTRACT( MONTH from fecha) as mes, EXTRACT(year from fecha) as año" + 
+					"FROM (" +sql + ")"+
+					"group by EXTRACT(MONTH from fecha), EXTRACT(year from fecha)))=conteo;";
+
+			sql4="select precio, mes, año from (SELECT sum (valor) as precio,   EXTRACT( MONTH from fecha) as mes, EXTRACT(year from fecha) as año " + 
+					"FROM ("+sql+")" + 
+					"group by EXTRACT(MONTH from fecha), EXTRACT(year from fecha))" + 
+					"where(SELECT max(precio)" + 
+					"FROM(SELECT sum (valor) as precio,   EXTRACT( MONTH from fecha) as mes, EXTRACT(year from fecha) as año" + 
+					"FROM (" +sql + ")"+
+					"group by EXTRACT(MONTH from fecha), EXTRACT(year from fecha)))=precio;";
+
+
+			PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+			recursos.add(prepStmt2);
+			prepStmt2.executeQuery();
+
+			ResultSet rs2 = prepStmt2.executeQuery();
+
+			while (rs2.next()) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String mes = rs2.getString("mes");
+				String año = rs2.getString("año");
+				String tf=año+"-"+mes+"-01";
+				Date fecha=null;
+
+				fecha = sdf.parse(tf);
+				parte1.add(fecha);
+			}
+
+			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+			recursos.add(prepStmt3);			    
+			rs2 = prepStmt3.executeQuery();
+
+			while (rs2.next()) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String mes = rs2.getString("mes");
+				String año = rs2.getString("año");
+				String tf=año+"-"+mes+"-01";
+				Date fecha=null;
+				fecha = sdf.parse(tf);
+				parte2.add(fecha);
+			}
+			
+			PreparedStatement prepStmt4 = conn.prepareStatement(sql4);
+			recursos.add(prepStmt4);
+			rs2 = prepStmt4.executeQuery();
+			
+			while (rs2.next()) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				String mes = rs2.getString("mes");
+				String año = rs2.getString("año");
+				String tf=año+"-"+mes+"-01";
+				Date fecha=null;
+
+				fecha = sdf.parse(tf);
+				parte3.add(fecha);
+			}
+
+		}
+		else
+		{
+			System.out.println("ingreso una unidad de tiempo no valida");
+		}
+
+
+
+		ArrayList<Date>[] fechas=new ArrayList[3];
+		fechas[0]= parte1;
+		fechas[2]= parte2;
+		fechas[3]= parte3;
+
+	
+		return fechas;
+
+	
+			
+	}
+	
 	/**
-	 * Metodo que, usando la conexi�n a la base de datos, saca todos los
+	 * Metodo que, usando la conexión a la base de datos, saca todos los
 	 * Reservas de la base de datos 
 	 * <b>SQL Statement:</b> SELECT * FROM Reserva
 	 * 
@@ -86,7 +272,7 @@ public class DAOReserva {
 
 	
 	/**
-	 * Metodo que, usando la conexi�n a la base de datos, un 
+	 * Metodo que, usando la conexión a la base de datos, un 
 	 * Reserva de la base de datos 
 	 * <b>SQL Statement:</b> SELECT * FROM Reserva WHERE ID=id
 	 * 
