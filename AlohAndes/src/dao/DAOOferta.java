@@ -85,6 +85,36 @@ public class DAOOferta {
 	}
 
 
+		public List<Oferta> ofertasPocaDemanda() throws SQLException
+	{
+		ArrayList<Oferta> ofertas = new ArrayList<Oferta>();
+		String sql="SELECT fs.*" + 
+				"FROM (SELECT COUNT(*) AS conteo, res.IDOFERTA AS ofertaDemanda FROM RESERVA res INNER JOIN RESERVA rev ON rev.IDOFERTA = res.IDOFERTA" + 
+				"WHERE res.ID!=rev.ID AND ((EXTRACT(YEAR from res.FECHAINICIAL) - EXTRACT(YEAR from rev.FECHAFINAL)=0)AND(( (EXTRACT(month from res.FECHAINICIAL) - EXTRACT(month from rev.FECHAFINAL)=1) AND (EXTRACT(DAY from res.FECHAINICIAL) - EXTRACT(DAY from rev.FECHAFINAL)<=0))" + 
+				"                           OR ((EXTRACT(month from res.FECHAINICIAL) - EXTRACT(month from rev.FECHAFINAL)=0) AND (EXTRACT(DAY from res.FECHAINICIAL) - EXTRACT(DAY from rev.FECHAFINAL)>=1)))                " + 
+				"                           OR" + 
+				"                           (((EXTRACT(month from rev.FECHAINICIAL) - EXTRACT(month from res.FECHAFINAL)=1) AND (EXTRACT(DAY from rev.FECHAINICIAL) - EXTRACT(DAY from res.FECHAFINAL)<=0))" + 
+				"                           OR ((EXTRACT(month from rev.FECHAINICIAL) - EXTRACT(month from res.FECHAFINAL)=0) AND (EXTRACT(DAY from rev.FECHAINICIAL) - EXTRACT(DAY from res.FECHAFINAL)>=1))))" + 
+				"                           group by res.IDOFERTA) INNER JOIN OFERTA fs ON fs.id= ofertaDemanda" + 
+				"WHERE conteo!=2;";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs= prepStmt.executeQuery();
+		
+		while(rs.next()) {
+			
+			int id= rs.getInt("id");
+			int idOperador= rs.getInt("idOperador");
+			int capacidad= rs.getInt("capacidadReal");
+			double costo= rs.getDouble("costo");
+			int disponibilidad=rs.getInt("disponibilidad");
+					
+			ofertas.add(new Oferta(id,idOperador,capacidad,costo,disponibilidad));
+		}
+		return ofertas; 
+
+	}
 	/**
 	 * Metodo que, usando la conexi�n a la base de datos, un 
 	 * Oferta de la base de datos 
