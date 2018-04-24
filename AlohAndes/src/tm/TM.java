@@ -963,6 +963,49 @@ public class TM {
 	}
 
 
+	public List<Inmueble> getAllDisponibles(String pCaracteristicas) {
+		List<Inmueble> ofertas = null;
+		DAOInmueble daoOferta = new DAOInmueble();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			ofertas = daoOferta.darInmueblesDisponibles(pCaracteristicas);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			try {
+				throw e;
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				try {
+					throw exception;
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return ofertas;
+	}
+
+
 
 
 

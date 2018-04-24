@@ -119,10 +119,11 @@ public class DAOReserva {
 		String sql = "INSERT INTO RESERVA VALUES (";
 		sql += reserva.getId() + ",";
 		sql += reserva.getIdCliente() + ",";
-		sql += reserva.getIdOferta() + ",";
-		sql += reserva.getFechaInicial() + "','";
-		sql += reserva.getFechaFinal() + "')";
-
+		sql += reserva.getIdOferta() + ", TO_DATE('";
+		sql += reserva.getFechaInicial() +"','YYYY-MM-DD')"+ ",TO_DATE('";
+		sql += reserva.getFechaFinal() +"','YYYY-MM-DD')"+ ")";
+		
+		System.out.println("SENTENCIAAAAAAAA: "+sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();

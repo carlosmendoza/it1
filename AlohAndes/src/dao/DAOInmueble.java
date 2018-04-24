@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import vos.Inmueble;
 
@@ -136,6 +137,16 @@ public class DAOInmueble {
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
 			
+		}
+
+
+		public List<Inmueble> darInmueblesDisponibles(String pCaracteristicas) {
+			
+			String fechaI = pCaracteristicas.split(":")[0];
+			String fechaF = pCaracteristicas.split(":")[1].split(";")[0];
+			String[] servicios = pCaracteristicas.split(";")[1].split(";");
+			
+			return null;
 		}
 	
 }

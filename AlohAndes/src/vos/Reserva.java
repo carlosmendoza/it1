@@ -8,10 +8,10 @@ public class Reserva {
 	@JsonProperty(value="id")
 	private int id;
 	
-	@JsonProperty(value="id")
+	@JsonProperty(value="idCliente")
 	private int idCliente;
 	
-	@JsonProperty(value="id")
+	@JsonProperty(value="idOferta")
 	private int idOferta;
 	
 	

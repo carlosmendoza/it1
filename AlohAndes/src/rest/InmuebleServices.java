@@ -47,6 +47,21 @@ public class InmuebleServices {
 	}
 	
 	@GET
+	@Path("inmueblesDisponibles/{caracteristicas}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getInmueblesdDisponibles(@PathParam("caracteristicas") String pCaracteristicas) {
+		
+		TM tm = new TM(getPath());
+		List<Inmueble> inmuebles;
+		try {
+			inmuebles = tm.getAllDisponibles(pCaracteristicas);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(inmuebles).build();
+	}
+	
+	@GET
 	@Path("idInmueble/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getInmueblePorId(@PathParam("id") String idInmueble) {
