@@ -88,6 +88,19 @@ public class ReservaServices {
 	}
 	
 
+		@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response ofertasPocaDemanda() {
+		TM tm = new TM(getPath());
+		List<Oferta> ofertas;
+		try {
+			ofertas = tm.ofertasPocaDemanda();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(ofertas).build();
+	}
+	
 	@POST
 	@Path("reservaMasiva")
 	@Consumes(MediaType.APPLICATION_JSON)
