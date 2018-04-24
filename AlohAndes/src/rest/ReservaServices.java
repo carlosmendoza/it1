@@ -89,7 +89,7 @@ public class ReservaServices {
 	
 
 	@POST
-	@Path("reservaMasiva	")
+	@Path("reservaMasiva")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	
@@ -121,7 +121,7 @@ public class ReservaServices {
 	@DELETE
 	@Path("idReservaMasiva/{id}")	
 	
-	public Response deleteReservaMasiva(@PathParam("id") String idReserva) {
+	public Response deleteReservaMasiva(@PathParam("id") int idReserva) {
 		TM tm = new TM(getPath());
 		try {
 			tm.borrarReservaMasiva(idReserva);

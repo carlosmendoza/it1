@@ -163,7 +163,7 @@ public class DAOReserva {
 		List<Inmueble> in = dao1.darInmueblesDisponibles(cadena);
 		for(Inmueble inm: in)
 		{
-			if(!inm.getCategoria().equals(reserva.getTipo())){in.remove(inm);			}
+			if(!inm.getCategoria().equals(reserva.getTipo())){in.remove(inm);}
 		}
 		if(in.size()<reserva.getNumeroH()){throw new Exception("AlohAndes no tiene la capacidad de realizar esta reserva masiva");}
 		String sql="select max(id) as nummax from oferta";

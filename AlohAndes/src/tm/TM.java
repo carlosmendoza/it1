@@ -1011,7 +1011,7 @@ public class TM {
 	}
 
 
-	public void borrarReservaMasiva(String idReserva) throws SQLException {
+	public void borrarReservaMasiva(int idReserva) throws SQLException {
 		DAOReserva daoReserva = new DAOReserva();
 		try {
 			////// transaccion
