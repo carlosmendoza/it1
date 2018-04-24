@@ -82,6 +82,76 @@ public class TM {
 		return DriverManager.getConnection(url, user, password);
 	}
 	
+	///////////////////////////////////
+	///requerimiento de consulta 7 ///
+	/////////////////////////////////	
+	
+	public ArrayList<Date>[]  analizarOperaciones(String unidad, String tipoAloha) throws Exception
+	{
+		ArrayList<Date>[]  fechas;
+		DAOReserva daoReserva = new DAOReserva();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			fechas= daoReserva.analizarOperaciones(unidad, tipoAloha);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return fechas;	
+	}
+
+	
+	public List<Oferta>  ofertasPocaDemanda() throws Exception
+	{
+		ArrayList<Oferta>  ofertasDemanda= new ArrayList<Oferta>();
+		DAOOferta daoOferta = new DAOOferta();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			ofertasDemanda= (ArrayList<Oferta>) daoOferta.ofertasPocaDemanda();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return ofertasDemanda;	
+	}
+
+	
 ///////////////////////////////////
 ////////// CLIENTE ///////////////
 /////////////////////////////////
