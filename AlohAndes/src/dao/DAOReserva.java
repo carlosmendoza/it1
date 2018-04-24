@@ -70,7 +70,7 @@ public class DAOReserva {
 
 		while (rs.next()) {
 			int id = rs.getInt("id");
-			int idCliente = rs.getInt("idCliente");
+			int idCliente = rs.getInt("documentocliente");
 			int idOferta = rs.getInt("idOferta");
 			Date fechaInicial = rs.getDate("fechaInicial");
 			Date fechaFinal = rs.getDate("fechaFinal");
