@@ -118,6 +118,19 @@ public class ReservaServices {
 		return Response.status(200).entity(reserva).build();
 	}
 	
+	@DELETE
+	@Path("idReservaMasiva/{id}")	
+	
+	public Response deleteReservaMasiva(@PathParam("id") String idReserva) {
+		TM tm = new TM(getPath());
+		try {
+			tm.borrarReservaMasiva(idReserva);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(idReserva).build();
+	}
+	
 	
 	
 	

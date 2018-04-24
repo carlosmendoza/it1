@@ -812,37 +812,6 @@ public class TM {
 		return clientes;
 	}
 
-//
-//	public void addReservaLista(List<Reserva> reservas) {
-//
-//		try {
-//			////// transaccion
-//			this.conn = darConexion();
-//			daoOferta.setConn(conn);
-//			clientes = daoCliente.darDineroProv();
-//
-//		} catch (SQLException e) {
-//			System.err.println("SQLException:" + e.getMessage());
-//			e.printStackTrace();
-//			throw e;
-//		} catch (Exception e) {
-//			System.err.println("GeneralException:" + e.getMessage());
-//			e.printStackTrace();
-//			throw e;
-//		} finally {
-//			try {
-//				daoCliente.cerrarRecursos();
-//				if (this.conn != null)
-//					this.conn.close();
-//			} catch (SQLException exception) {
-//				System.err.println("SQLException closing resources:" + exception.getMessage());
-//				exception.printStackTrace();
-//				throw exception;
-//			}
-//		}
-//		
-//		
-//	}
 
 
 	public void addOfertaLista(List<Oferta> oferta) throws SQLException {
@@ -1015,6 +984,40 @@ public class TM {
 			this.conn = darConexion();
 			daoReserva.setConn(conn);
 			daoReserva.addReservaMasiva(reservas);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+		
+		
+	}
+
+
+	public void borrarReservaMasiva(String idReserva) throws SQLException {
+		DAOReserva daoReserva = new DAOReserva();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			daoReserva.eliminarReservaMasiva(idReserva);
 			conn.commit();
 
 		} catch (SQLException e) {

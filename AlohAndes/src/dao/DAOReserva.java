@@ -145,6 +145,16 @@ public class DAOReserva {
 		prepStmt.executeQuery();
 		
 	}
+	public void eliminarReservaPorId(int id) throws SQLException {
+
+		String sql = "DELETE FROM RESERVA";
+		sql += " WHERE ID = " + id;
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+	}
 	
 	public void addReservaMasiva(ReservaMasiva reserva) throws Exception {
 		DAOInmueble dao1 = new DAOInmueble();
@@ -186,6 +196,25 @@ public class DAOReserva {
 		
 		
 		
+		
+	}
+
+	public void eliminarReservaMasiva(int idReserva) throws SQLException {
+		
+		String sql1 = "SELECT IDRESERVA FROM RESERVAMASIVA WHERE IDRESERVAM= "+idReserva;
+		PreparedStatement prepStmt = conn.prepareStatement(sql1);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		while (rs.next())
+		{
+			eliminarReservaPorId(rs.getInt("idreserva"));
+		}
+		String sql = "DELETE FROM RESERVAMASIVA";
+		sql += " WHERE ID = " + idReserva;
+
+		PreparedStatement prepStmt2 = conn.prepareStatement(sql);
+		recursos.add(prepStmt2);
+		prepStmt2.executeQuery();
 		
 	}
 }
