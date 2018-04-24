@@ -1,0 +1,33 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RF9",
+		"_postman_id": "9b90d14d-5055-f7e2-b5c5-a34c2facc763",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Inhabilitar oferta operador- todas las reservas exitosamente",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/operadores/inhabilitar/123456",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Inhabilitar exitoso -reservas parciales",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/operadores/inhabilitar/66666",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

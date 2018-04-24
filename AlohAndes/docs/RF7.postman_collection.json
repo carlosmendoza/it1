@@ -1,0 +1,91 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RF7",
+		"_postman_id": "4dfa6b1a-e937-3f5e-6091-bd9cfdcf6755",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Reserva masiva exitosa",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/reservaMasiva",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"156\",\n\t\"idCliente\":\"123456\",\n\t\"numeroH\": \"10\",\n\t\"tipo\":\"suite\",\n\t\"servicios\":\"wifi-lavanderia\",\n\t\"fechaInicial\":\"2018-09-01\",\n\t\"fechaFinal\":\"2018-09-20\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Añadir reserva masiva fallida",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/reservaMasiva",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"156\",\n\t\"idCliente\":\"123456\",\n\t\"numeroH\": \"10\",\n\t\"tipo\":\"suite\",\n\t\"servicios\":\"wifi-lavanderia\",\n\t\"fechaInicial\":\"2018-09-01\",\n\t\"fechaFinal\":\"2018-09-20\"\n}"
+				},
+				"description": "Por restricciòn de llave"
+			},
+			"response": []
+		},
+		{
+			"name": "Añadir reserva masiva fallida por numeroH",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/reservaMasiva",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"1567\",\n\t\"idCliente\":\"1234567\",\n\t\"numeroH\": \"1000\",\n\t\"tipo\":\"suite\",\n\t\"servicios\":\"wifi-lavanderia\",\n\t\"fechaInicial\":\"2018-09-01\",\n\t\"fechaFinal\":\"2018-09-20\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Añadir reserva fallida por servicios innexistentes",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/reservaMasiva",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"1569\",\n\t\"idCliente\":\"1234567\",\n\t\"numeroH\": \"10\",\n\t\"tipo\":\"suite\",\n\t\"servicios\":\"servicioinexistente-asdasdsad\",\n\t\"fechaInicial\":\"2018-09-01\",\n\t\"fechaFinal\":\"2018-09-20\"\n\t}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

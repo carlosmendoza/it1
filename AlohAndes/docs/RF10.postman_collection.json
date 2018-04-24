@@ -1,0 +1,33 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RF10",
+		"_postman_id": "7db84db3-3c6a-f3d5-536e-03935955d533",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Habilitar exitoso",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/operadores/habilitar/123456",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Habilitar",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/operadores/habilitar/66666",
+				"method": "PUT",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

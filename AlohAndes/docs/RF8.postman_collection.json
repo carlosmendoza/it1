@@ -1,0 +1,36 @@
+{
+	"variables": [],
+	"info": {
+		"name": "RF8",
+		"_postman_id": "b4ee5a70-4b09-2aca-d0cc-febdf216d4d4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Eliminar reserva masiva exitosa",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/idReservaMasiva/1234",
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminacion de reserva masiva fallida",
+			"request": {
+				"url": "http://localhost:8080/AlohAndes1/rest/reservas/idReservaMasiva/6666",
+				"method": "DELETE",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
