@@ -6,8 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import vos.Inmueble;
 import vos.Reserva;
+import vos.ReservaMasiva;
 
 public class DAOReserva {
 
@@ -127,9 +130,7 @@ public class DAOReserva {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
-		
-		
-		
+			
 	}
 
 
@@ -142,6 +143,49 @@ public class DAOReserva {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+	}
+	
+	public void addReservaMasiva(ReservaMasiva reserva) throws Exception {
+		DAOInmueble dao1 = new DAOInmueble();
+		int idMax=0;
+		String cadena = reserva.getFechaInicial()+"\\:"+reserva.getFechaFinal()+"X"+reserva.getServicios();
+		List<Inmueble> in = dao1.darInmueblesDisponibles(cadena);
+		for(Inmueble inm: in)
+		{
+			if(!inm.getCategoria().equals(reserva.getTipo())){in.remove(inm);			}
+		}
+		if(in.size()<reserva.getNumeroH()){throw new Exception("AlohAndes no tiene la capacidad de realizar esta reserva masiva");}
+		String sql="select max(id) as nummax from oferta";
+		System.out.println("SENTENCIA: "+sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		if(rs.next()) {idMax = rs.getInt("nummax")+1;}
+		for(Inmueble inm: in)
+		{String sql2="insert into reservamasiva values("+reserva.getId()+","+idMax+")";
+		System.out.println("SENTENCIA: "+sql2);
+		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+		recursos.add(prepStmt2);
+		prepStmt2.executeQuery();
+		
+		String sql3="select * from inmueble inner join oferta on inmueble.idoferta = oferta.id and inmueble.id="+inm.getId();
+		System.out.println("SENTENCIA: "+sql3);
+		PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+		recursos.add(prepStmt3);
+		ResultSet rs2 = prepStmt3.executeQuery();
+		if(rs2.next())
+		{
+			Reserva nReserva = new Reserva(idMax, reserva.getIdCliente(), rs2.getInt("idoferta"), reserva.getFechaInicial(), reserva.getFechaFinal());
+			idMax = idMax+1;
+			addReserva(nReserva);
+		}
+		
+		}
+		
+		
+		
+		
 		
 	}
 }

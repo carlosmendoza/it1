@@ -15,7 +15,7 @@ public class Servicio {
 	
 	public Servicio(@JsonProperty(value="nombre") int pId, @JsonProperty(value="nombre") String nombre, @JsonProperty(value="descripcion") String descripcion)
 	{
-		this.setId(pId);
+		this.id=pId;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 	}

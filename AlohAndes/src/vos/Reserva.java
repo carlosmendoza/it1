@@ -1,4 +1,4 @@
-package vos;
+ package vos;
 
 import java.sql.Date;
 

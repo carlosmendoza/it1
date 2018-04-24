@@ -17,6 +17,7 @@ import javax.ws.rs.core.Response;
 import tm.TM;
 import vos.Oferta;
 import vos.Reserva;
+import vos.ReservaMasiva;
 
 @Path("reservas")
 public class ReservaServices {
@@ -87,19 +88,20 @@ public class ReservaServices {
 	}
 	
 
-//	@POST
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	
-//	public Response addReservaLista(List<Reserva> reservas) {
-//		TM tm = new TM(getPath());
-//		try {
-//			tm.addReservaLista(reservas);
-//		} catch (Exception e) {
-//			return Response.status(500).entity(doErrorMessage(e)).build();
-//		}
-//		return Response.status(200).entity(reservas).build();
-//	}
+	@POST
+	@Path("reservaMasiva	")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public Response addReservaMasiva(ReservaMasiva reservas) {
+		TM tm = new TM(getPath());
+		try {
+			tm.addReservaMasiva(reservas);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(reservas).build();
+	}
 	
 	@DELETE
 	@Path("idReserva/{id}")

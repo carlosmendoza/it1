@@ -25,6 +25,7 @@ import vos.Oferta;
 import vos.OfertaTotal;
 import vos.Operador;
 import vos.Reserva;
+import vos.ReservaMasiva;
 
 
 public class TM {
@@ -1003,6 +1004,41 @@ public class TM {
 			}
 		}
 		return ofertas;
+	}
+
+
+	public void addReservaMasiva(ReservaMasiva reservas) throws Exception {
+
+		DAOReserva daoReserva = new DAOReserva();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			daoReserva.addReservaMasiva(reservas);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		
+		
+		
 	}
 
 
