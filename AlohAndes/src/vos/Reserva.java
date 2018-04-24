@@ -21,6 +21,8 @@ public class Reserva {
 	@JsonProperty(value="fechaFinal")
 	private Date fechaFinal;
 	
+	
+	
 	public Reserva (@JsonProperty(value="id")int id,@JsonProperty(value="idCliente")int idCliente,@JsonProperty(value="idOferta")int idOferta, @JsonProperty(value="fechaInicial") Date fechaInicial, 
 			@JsonProperty(value="fechaFinal")Date fechaFinal)
 	{

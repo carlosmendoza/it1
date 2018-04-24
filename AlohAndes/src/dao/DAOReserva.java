@@ -123,7 +123,7 @@ public class DAOReserva {
 		sql += reserva.getFechaInicial() +"','YYYY-MM-DD')"+ ",TO_DATE('";
 		sql += reserva.getFechaFinal() +"','YYYY-MM-DD')"+ ")";
 		
-		System.out.println("SENTENCIAAAAAAAA: "+sql);
+		System.out.println("SENTENCIA: "+sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
