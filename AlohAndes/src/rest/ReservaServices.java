@@ -34,7 +34,20 @@ public class ReservaServices {
 		return "{ \"ERROR\": \"" + e.getMessage() + "\"}";
 	}
 	
-	
+	@GET
+	@Path("unidad/{id}/tipo/{tp}")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response analizarOperaciones(@PathParam("id")String unidad, @PathParam("tp")String tipoAloha) {
+
+		TM tm = new TM(getPath());
+		ArrayList<Date>[] n;
+		try {
+			n=tm.analizarOperaciones(unidad, tipoAloha);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(n).build();
+	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
