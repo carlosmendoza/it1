@@ -690,7 +690,7 @@ public class TM {
 	}
 
 
-	public void addReserva(Reserva reserva) throws SQLException {
+	public void addReserva(Reserva reserva) throws Exception {
 		DAOReserva daoReserva = new DAOReserva();
 		try {
 			////// transaccion
@@ -1113,6 +1113,38 @@ public class TM {
 		}
 		
 		
+		
+	}
+
+
+	public void habilitarOperador(int id) throws SQLException {
+		DAOOperador daoOperador = new DAOOperador();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			daoOperador.habilitar(id);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
 		
 	}
 

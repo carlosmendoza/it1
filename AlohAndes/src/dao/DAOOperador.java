@@ -175,5 +175,24 @@ public class DAOOperador {
 		prepStmt.executeQuery();
 		
 	}
+
+	public void habilitar(int id) throws SQLException {
+		String sql = "delete from OPERADORI WHERE ID= "+id;
+		
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+	}
+	public void inhabilitar(int id) throws SQLException {
+		String sql = "insert into OPERADORI values ("+id+")";
+		
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+	}
 	
 }

@@ -306,7 +306,20 @@ public class DAOReserva {
 }
 	
 	
-	public void addReserva(Reserva reserva) throws SQLException {
+	public void addReserva(Reserva reserva) throws Exception {
+		
+		String sql1 = "SELECT * FROM OFERTA INNER JOIN OPERADORI ON OFERTA.IDOPERADOR = OPERADORI.ID AND OFERTA.ID= "+reserva.getIdOferta();
+		PreparedStatement prepStmt1 = conn.prepareStatement(sql1);
+		recursos.add(prepStmt1);
+		ResultSet r = prepStmt1.executeQuery();
+		if(r.next())
+		{
+			throw new Exception ("El operador esta inhabilitado");
+		}
+		
+		
+		
+		
 		String sql = "INSERT INTO RESERVA VALUES (";
 		sql += reserva.getId() + ",";
 		sql += reserva.getIdCliente() + ",";
@@ -343,12 +356,66 @@ public class DAOReserva {
 		prepStmt.executeQuery();
 		
 	}
+	public List<Inmueble> darInmueblesDisponibles(String pCaracteristicas) throws SQLException {
+		List<Inmueble> inmuebles = new ArrayList<>();
+		String fechaI = pCaracteristicas.split("\\:")[0];
+		String fechaF = pCaracteristicas.split("\\:")[1].split(";")[0].split("X")[0];
+		String[] servicios = pCaracteristicas.split("X")[1].split("-");
+		
+		
+		String sql = "SELECT OFERTA.ID AS IDOFERTA FROM OFERTA LEFT OUTER JOIN (SELECT OFERTA.ID as id1 FROM OFERTA INNER JOIN RESERVA ON OFERTA.ID = RESERVA.IDOFERTA "
+				+ "where TO_DATE('"+fechaI+"','YYYY-MM-DD') between reserva.fechainicial and RESERVA.FECHAFINAL or TO_DATE('"+fechaF+"','YYYY-MM-DD') between reserva.fechainicial and RESERVA.FECHAFINAL"+") ON OFERTA.ID = ID1 WHERE ID1 IS NULL";
+		System.out.println(".............. "+sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+	while (rs.next()) {
+		int idOfer = rs.getInt("idOferta");
+		boolean cumple = true;
+		for(int i=0; i<servicios.length;i++)
+		{
+			String sql2= "SELECT servicio.nombre FROM OFerta inner join prestan on oferta.id = prestan.idoferta and oferta.id ="+idOfer+ "inner join servicio on prestan.idservicio = servicio.id where servicio.nombre ='"+servicios[i]+"'";
+			PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+			recursos.add(prepStmt2);
+			ResultSet rs2 = prepStmt2.executeQuery();
+			if(rs2.next()==false)
+			{
+				cumple=false;
+			}
+		}
+		if (cumple==true)
+		{
+			String sql3= "SELECT * FROM inmueble where inmueble.idoferta="+idOfer;
+			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+			recursos.add(prepStmt3);
+			ResultSet rs3 = prepStmt3.executeQuery();
+			if(rs.next())
+			{
+				int id = rs.getInt("id");
+				int idOferta = rs.getInt("idOferta");
+				String tipo = rs.getString("tipo");
+				String categoria = rs.getString("categoria");
+				int tamanio = rs.getInt("tamanio");
+				String ubicacion = rs.getString("ubicacion");
+				inmuebles.add(new Inmueble(id,idOferta,tipo,categoria,tamanio,ubicacion));
+			}
+		}
+	
+		
+		
+		
+	}
+			
+		
+		return inmuebles;
+	}
 	
 	public void addReservaMasiva(ReservaMasiva reserva) throws Exception {
-		DAOInmueble dao1 = new DAOInmueble();
+		;
 		int idMax=0;
 		String cadena = reserva.getFechaInicial()+"\\:"+reserva.getFechaFinal()+"X"+reserva.getServicios();
-		List<Inmueble> in = dao1.darInmueblesDisponibles(cadena);
+		List<Inmueble> in = darInmueblesDisponibles(cadena);
 		for(Inmueble inm: in)
 		{
 			if(!inm.getCategoria().equals(reserva.getTipo())){in.remove(inm);}
