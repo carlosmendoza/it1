@@ -421,21 +421,23 @@ public class DAOReserva {
 			if(!inm.getCategoria().equals(reserva.getTipo())){in.remove(inm);}
 		}
 		if(in.size()<reserva.getNumeroH()){throw new Exception("AlohAndes no tiene la capacidad de realizar esta reserva masiva");}
+		
 		String sql="select max(id) as nummax from oferta";
-		System.out.println("SENTENCIA: "+sql);
+		
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
-		if(rs.next()) {idMax = rs.getInt("nummax")+1;}
+		if(rs.next()) 
+		{idMax = rs.getInt("nummax")+1;}
 		for(Inmueble inm: in)
 		{String sql2="insert into reservamasiva values("+reserva.getId()+","+idMax+")";
-		System.out.println("SENTENCIA: "+sql2);
+		
 		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
 		recursos.add(prepStmt2);
 		prepStmt2.executeQuery();
 		
 		String sql3="select * from inmueble inner join oferta on inmueble.idoferta = oferta.id and inmueble.id="+inm.getId();
-		System.out.println("SENTENCIA: "+sql3);
+		
 		PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
 		recursos.add(prepStmt3);
 		ResultSet rs2 = prepStmt3.executeQuery();
@@ -456,13 +458,13 @@ public class DAOReserva {
 
 	public void eliminarReservaMasiva(int idReserva) throws SQLException {
 		
-		String sql1 = "SELECT IDRESERVA FROM RESERVAMASIVA WHERE IDRESERVAM= "+idReserva;
+		String sql1 = "SELECT IDINDIVIDUAL FROM RESERVAMASIVA WHERE id= "+idReserva;
 		PreparedStatement prepStmt = conn.prepareStatement(sql1);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 		while (rs.next())
 		{
-			eliminarReservaPorId(rs.getInt("idreserva"));
+			eliminarReservaPorId(rs.getInt("idIndividual"));
 		}
 		String sql = "DELETE FROM RESERVAMASIVA";
 		sql += " WHERE ID = " + idReserva;
