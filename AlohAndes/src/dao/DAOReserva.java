@@ -365,7 +365,7 @@ public class DAOReserva {
 		
 		String sql = "SELECT OFERTA.ID AS IDOFERTA FROM OFERTA LEFT OUTER JOIN (SELECT OFERTA.ID as id1 FROM OFERTA INNER JOIN RESERVA ON OFERTA.ID = RESERVA.IDOFERTA "
 				+ "where TO_DATE('"+fechaI+"','YYYY-MM-DD') between reserva.fechainicial and RESERVA.FECHAFINAL or TO_DATE('"+fechaF+"','YYYY-MM-DD') between reserva.fechainicial and RESERVA.FECHAFINAL"+") ON OFERTA.ID = ID1 WHERE ID1 IS NULL";
-		System.out.println(".............. "+sql);
+		System.out.println(sql);
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
@@ -390,14 +390,14 @@ public class DAOReserva {
 			PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
 			recursos.add(prepStmt3);
 			ResultSet rs3 = prepStmt3.executeQuery();
-			if(rs.next())
+			if(rs3.next())
 			{
-				int id = rs.getInt("id");
-				int idOferta = rs.getInt("idOferta");
-				String tipo = rs.getString("tipo");
-				String categoria = rs.getString("categoria");
-				int tamanio = rs.getInt("tamanio");
-				String ubicacion = rs.getString("ubicacion");
+				int id = rs3.getInt("id");
+				int idOferta = rs3.getInt("idOferta");
+				String tipo = rs3.getString("tipo");
+				String categoria = rs3.getString("categoria");
+				int tamanio = rs3.getInt("tamanio");
+				String ubicacion = rs3.getString("ubicacion");
 				inmuebles.add(new Inmueble(id,idOferta,tipo,categoria,tamanio,ubicacion));
 			}
 		}
