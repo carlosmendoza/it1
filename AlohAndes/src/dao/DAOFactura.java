@@ -14,12 +14,12 @@ public class DAOFactura {
 	
 
 	/**
-	 * Arraylits de recursos que se usan para la ejecución de sentencias SQL
+	 * Arraylits de recursos que se usan para la ejecuciï¿½n de sentencias SQL
 	 */
 	private ArrayList<Object> recursos;
 
 	/**
-	 * Atributo que genera la conexión a la base de datos
+	 * Atributo que genera la conexiï¿½n a la base de datos
 	 */
 	private Connection conn;
 	
@@ -54,7 +54,7 @@ public class DAOFactura {
 	}
 	
 	/**
-	 * Metodo que, usando la conexión a la base de datos, saca todos los
+	 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los
 	 * Facturas de la base de datos 
 	 * <b>SQL Statement:</b> SELECT * FROM Factura
 	 * 
@@ -77,7 +77,7 @@ public class DAOFactura {
 			int id = rs.getInt("id");
 			double valor = rs.getDouble("valor");
 			Date fecha = rs.getDate("fecha");
-			int idOferta = rs.getInt("idOferta");
+			int idOferta = rs.getInt("idReserva");
 			facturas.add(new Factura(id, valor, (java.sql.Date) fecha, idOferta));
 		}
 		return facturas;

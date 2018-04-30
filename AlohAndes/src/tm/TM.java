@@ -19,6 +19,7 @@ import dao.DAOOfertaTotal;
 import dao.DAOOperador;
 import dao.DAOReserva;
 import vos.Cliente;
+import vos.ClienteU;
 import vos.DineroProv;
 import vos.Factura;
 import vos.IndiceOcupacion;
@@ -1149,9 +1150,36 @@ public class TM {
 	}
 
 
-	public List<ClienteU> getUsoCliente(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ClienteU> getUsoCliente(int id) throws SQLException {
+		List<ClienteU> reservas;
+		DAOCliente daoReserva = new DAOCliente();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			reservas = daoReserva.darUsoCliente(id);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return reservas;
 	}
 
 

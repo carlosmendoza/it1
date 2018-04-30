@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import tm.TM;
 import vos.Cliente;
+import vos.ClienteU;
 
 @Path("clientes")
 public class ClienteServices {
@@ -66,7 +67,7 @@ public class ClienteServices {
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getUsoCliente(@PathParam("id")int id) {
 		TM tm = new TM(getPath());
-		List<Cliente> clientes;
+		List<ClienteU> clientes;
 		try {
 			
 			clientes = tm.getUsoCliente(id);

@@ -5,9 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import vos.Cliente;
+import vos.ClienteU;
 
 
 public class DAOCliente {
@@ -40,7 +42,7 @@ public class DAOCliente {
 		
 		
 		/**
-		 * Metodo que, usando la conexión a la base de datos, saca todos los
+		 * Metodo que, usando la conexiï¿½n a la base de datos, saca todos los
 		 * clientes de la base de datos 
 		 * <b>SQL Statement:</b> SELECT * FROM CLIENTE
 		 * 
@@ -74,7 +76,7 @@ public class DAOCliente {
 
 
 		/**
-		 * Metodo que, usando la conexión a la base de datos, un 
+		 * Metodo que, usando la conexiï¿½n a la base de datos, un 
 		 * cliente de la base de datos 
 		 * <b>SQL Statement:</b> SELECT * FROM CLIENTE WHERE ID=id
 		 * 
@@ -144,6 +146,29 @@ public class DAOCliente {
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
 			
+		}
+
+
+		public List<ClienteU> darUsoCliente(int id) throws SQLException {
+			List<ClienteU> clientes = new ArrayList<>();
+			String sql = "select RESERVA.DOCUMENTOCLIENTE, FECHAINICIAL, FECHAFINAL, FACTURA.VALOR, TIPO, TAMANIO, CATEGORIA from reserva inner join factura on reserva.id = factura.IDRESERVA inner join inmueble "
+					+ "on inmueble.idoferta = reserva.idOferta where reserva.documentocliente = "+id;
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs= prepStmt.executeQuery();
+			while(rs.next())
+			{
+				int doc = rs.getInt("documentocliente");
+				Date fi= rs.getDate("fechainicial");
+				Date ff= rs.getDate("fechafinal");
+				int valor = rs.getInt("valor");
+				String tipo = rs.getString("tipo");
+				int tamanio = rs.getInt("tamanio");
+				String categoria = rs.getString("categoria");
+				clientes.add(new ClienteU(fi,ff,categoria,tamanio,valor,doc));
+				
+			}
+			return clientes;
 		}
 
 
