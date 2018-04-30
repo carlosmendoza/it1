@@ -60,11 +60,14 @@ public class DAODinero {
 	
 	
 
-		public ArrayList<DineroProv> darDineroProv() throws SQLException, Exception {
+		public ArrayList<DineroProv> darDineroProv(String fecha) throws SQLException, Exception {
 			ArrayList<DineroProv> servicios = new ArrayList<DineroProv>();
+			String fechaA = fecha+"-01-01";
+			String fechaC = (Integer.valueOf(fecha)-1)+"-01-01";
 
 			String sql = "SELECT OPERADOR.NOMBRE, SUM(FACTURA.VALOR)AS DINERO FROM FACTURA INNER JOIN RESERVA ON FACTURA.IDRESERVA = RESERVA.ID INNER JOIN OFERTA ON RESERVA.IDOFERTA = OFERTA.ID " + 
-					"INNER JOIN OPERADOR ON OFERTA.IDOPERADOR = OPERADOR.ID GROUP BY OPERADOR.NOMBRE";
+					"INNER JOIN OPERADOR ON OFERTA.IDOPERADOR = OPERADOR.ID ";
+			sql += "where factura.fecha between TO_DATE('"+fechaC+"','YYYY-MM-DD') and TO_DATE('"+fechaA+"','YYYY-MM-DD')"+" GROUP BY OPERADOR.NOMBRE ";
 			System.out.println("..........................................................");
 			System.out.println(sql);
 			PreparedStatement prepStmt = conn.prepareStatement(sql);

@@ -852,7 +852,7 @@ public class TM {
 	}
 
 
-	public List<DineroProv> getDineroR() throws Exception {
+	public List<DineroProv> getDineroR(String fecha) throws Exception {
 		List<DineroProv> clientes;
 		DAODinero daoCliente = new DAODinero();
 
@@ -860,7 +860,7 @@ public class TM {
 			////// transaccion
 			this.conn = darConexion();
 			daoCliente.setConn(conn);
-			clientes = daoCliente.darDineroProv();
+			clientes = daoCliente.darDineroProv(fecha);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
