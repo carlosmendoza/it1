@@ -136,7 +136,7 @@ public class ReservaServices {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	
-	public Response deleteReserva(Reserva reserva) {
+	public Response deleteReserva(@PathParam("id") int reserva) {
 		TM tm = new TM(getPath());
 		try {
 			tm.borrarReserva(reserva);

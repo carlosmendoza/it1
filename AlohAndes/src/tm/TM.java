@@ -820,7 +820,7 @@ public class TM {
 	}
 
 
-	public void borrarReserva(Reserva reserva) throws SQLException {
+	public void borrarReserva(int reserva) throws SQLException {
 		DAOReserva daoReserva = new DAOReserva();
 		try {
 			////// transaccion

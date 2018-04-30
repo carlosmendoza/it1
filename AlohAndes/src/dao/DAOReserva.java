@@ -253,7 +253,7 @@ public class DAOReserva {
 	public ArrayList<Reserva> darReservas() throws SQLException, Exception {
 		ArrayList<Reserva> reservas = new ArrayList<Reserva>();
 
-		String sql = "SELECT * FROM Reserva";
+		String sql = "SELECT * FROM reserva";
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -319,7 +319,6 @@ public class DAOReserva {
 		
 		
 		
-		
 		String sql = "INSERT INTO RESERVA VALUES (";
 		sql += reserva.getId() + ",";
 		sql += reserva.getIdCliente() + ",";
@@ -331,15 +330,34 @@ public class DAOReserva {
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+		
+		//Creacion de una factura por la reserva hecha
+		String sql2 = "SELECT oferta.costo FROM OFERTA where oferta.id ="+reserva.getIdOferta();
+		PreparedStatement prepStmt2 = conn.prepareStatement(sql2);
+		recursos.add(prepStmt2);
+		ResultSet r2 = prepStmt2.executeQuery();
+		int costo =0;
+		if(r2.next())
+		{
+			costo = r2.getInt("costo");
+		}
+		
+		//Creacion de una factura por la reserva hecha
+		String sql3 = "insert into factura (valor, fecha, idreserva) values ("+costo+", TO_DATE('"+reserva.getFechaInicial() +"','YYYY-MM-DD'),"+reserva.getId()+")";
+		System.out.println(sql3);
+		PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
+	
+		recursos.add(prepStmt3);
+		prepStmt3.executeQuery();
 			
 	}
 
 
 	
-	public void eliminarReserva(Reserva serv) throws SQLException {
+	public void eliminarReserva(int serv) throws SQLException {
 
 		String sql = "DELETE FROM RESERVA";
-		sql += " WHERE ID = " + serv.getId();
+		sql += " WHERE ID = " + serv;
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
