@@ -1149,6 +1149,12 @@ public class TM {
 	}
 
 
+	public List<ClienteU> getUsoCliente(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 
 
