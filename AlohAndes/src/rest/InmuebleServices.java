@@ -47,10 +47,10 @@ public class InmuebleServices {
 	}
 	
 	@GET
-	@Path("inmueblesDisponibles/{caracteristicas}")
+	@Path("inmueblesDisponibles/{fechaI}/{fechaF}/{servi}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getInmueblesdDisponibles(@PathParam("caracteristicas") String pCaracteristicas) {
-		
+	public Response getInmueblesdDisponibles(@PathParam("fechaI") String pFI,@PathParam("fechaF") String pFF, @PathParam("servi") String servi) {
+		String pCaracteristicas = pFI+";"+pFF+";"+servi;
 		TM tm = new TM(getPath());
 		List<Inmueble> inmuebles;
 		try {

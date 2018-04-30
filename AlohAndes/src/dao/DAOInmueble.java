@@ -142,9 +142,10 @@ public class DAOInmueble {
 
 		public List<Inmueble> darInmueblesDisponibles(String pCaracteristicas) throws SQLException {
 			List<Inmueble> inmuebles = new ArrayList<>();
-			String fechaI = pCaracteristicas.split("\\:")[0];
-			String fechaF = pCaracteristicas.split("\\:")[1].split(";")[0].split("X")[0];
-			String[] servicios = pCaracteristicas.split("X")[1].split("-");
+			System.out.println(pCaracteristicas);
+			String fechaI = pCaracteristicas.split("\\;")[0];
+			String fechaF = pCaracteristicas.split("\\;")[1];
+			String[] servicios = pCaracteristicas.split("\\;")[2].split("-");
 			
 			
 			String sql = "SELECT OFERTA.ID AS IDOFERTA FROM OFERTA LEFT OUTER JOIN (SELECT OFERTA.ID as id1 FROM OFERTA INNER JOIN RESERVA ON OFERTA.ID = RESERVA.IDOFERTA "
@@ -174,14 +175,14 @@ public class DAOInmueble {
 				PreparedStatement prepStmt3 = conn.prepareStatement(sql3);
 				recursos.add(prepStmt3);
 				ResultSet rs3 = prepStmt3.executeQuery();
-				if(rs.next())
+				if(rs3.next())
 				{
-					int id = rs.getInt("id");
-					int idOferta = rs.getInt("idOferta");
-					String tipo = rs.getString("tipo");
-					String categoria = rs.getString("categoria");
-					int tamanio = rs.getInt("tamanio");
-					String ubicacion = rs.getString("ubicacion");
+					int id = rs3.getInt("id");
+					int idOferta = rs3.getInt("idOferta");
+					String tipo = rs3.getString("tipo");
+					String categoria = rs3.getString("categoria");
+					int tamanio = rs3.getInt("tamanio");
+					String ubicacion = rs3.getString("ubicacion");
 					inmuebles.add(new Inmueble(id,idOferta,tipo,categoria,tamanio,ubicacion));
 				}
 			}
