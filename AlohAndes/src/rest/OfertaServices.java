@@ -1,5 +1,6 @@
 package rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response;
 import tm.TM;
 import vos.IndiceOcupacion;
 import vos.Oferta;
+import vos.OfertaRFC12;
 import vos.OfertaTotal;
 
 
@@ -159,7 +161,35 @@ public class OfertaServices {
 		
 	}
 	
+	@GET
+	@Path("maximaOcupacion")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response rfc12ReservaMaxima() {
+
+		TM tm = new TM(getPath());
+		ArrayList<OfertaRFC12> n;
+		try {
+			n=tm.rfc12ReservaMaxima();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(n).build();
+	}
 	
+	@GET
+	@Path("minimaOcupacion")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response rfc12ReservaMinima() {
+
+		TM tm = new TM(getPath());
+		ArrayList<OfertaRFC12> n;
+		try {
+			n=tm.rfc12ReservaMaxima();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(n).build();
+	}
 	
 	
 	

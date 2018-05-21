@@ -1,6 +1,7 @@
 package rest;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -19,7 +20,9 @@ import javax.ws.rs.core.Response;
 
 import dao.DAOOperador;
 import tm.TM;
+import vos.OfertaRFC12;
 import vos.Operador;
+import vos.OperadorRFC12;
 @Path("operadores")
 public class OperadorServices {
 	@Context
@@ -141,6 +144,37 @@ public class OperadorServices {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(operador).build();
+	}
+	
+	
+	@GET
+	@Path("maximaOcupacion")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response rfc12OperadorMaximo() {
+
+		TM tm = new TM(getPath());
+		ArrayList<OperadorRFC12> n;
+		try {
+			n=tm.rfc12OperadorMaximo();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(n).build();
+	}
+	
+	@GET
+	@Path("minimaOcupacion")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response rfc12OperadorMinimo() {
+
+		TM tm = new TM(getPath());
+		ArrayList<OperadorRFC12> n;
+		try {
+			n=tm.rfc12OperadorMaximo();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(n).build();
 	}
 }
 

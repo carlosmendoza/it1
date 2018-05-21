@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import tm.TM;
 import vos.Oferta;
+import vos.OfertaRFC12;
 import vos.Reserva;
 import vos.ReservaMasiva;
 
@@ -50,6 +51,9 @@ public class ReservaServices {
 		}
 		return Response.status(200).entity(n).build();
 	}
+	
+
+	
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })

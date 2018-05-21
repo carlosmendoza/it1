@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vos.Oferta;
+import vos.OfertaRFC12;
 import vos.OfertaTotal;
+import vos.Reserva;
 
 public class DAOOferta {
 
@@ -83,6 +85,75 @@ public class DAOOferta {
 		}
 		return ofertas;
 	}
+	
+	public ArrayList<OfertaRFC12> rfc12ReservaMaxima() throws SQLException
+	{
+		
+		ArrayList<OfertaRFC12> retorno= new ArrayList<OfertaRFC12>();
+		//reservas mas ocuapdas
+		String sql="Select ofert.*,numeroSemana2 "
+				+ "from(select idOferta,numeroSemana2, maximoOcupacion "
+				+ "from((select count(*)as numeroOcupacion1, ofe.id as idOferta, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana1 "
+				+ "FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID "
+				+ "group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') order by ofe.id)"
+				+ " INNER JOIN (select max(numeroOcupacion2)as maximoOcupacion, numeroSemana2"
+				+ " from(select count(*)as numeroOcupacion2, ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana2 "
+				+ "FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) "
+				+ "group by numeroSemana2)ON numeroSemana1=numeroSemana2 and numeroOcupacion1=maximoOcupacion)) "
+				+ "inner join OFERTA ofert ON ofert.ID=idOferta order by numeroSemana2;";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			int capacidadReal = rs.getInt("capacidadReal");
+			double costo= rs.getDouble("costo");
+			int disponibilidad = rs.getInt("disponibilidad");
+			int idOperador = rs.getInt("idOperador");
+			int numeroSemana2= rs.getInt("numeroSemana2");
+			retorno.add(new OfertaRFC12(id, idOperador, capacidadReal, costo, disponibilidad,numeroSemana2));
+		}
+		
+		return retorno;
+		
+	}
+	
+	public ArrayList<OfertaRFC12> rfc12ReservaMinima() throws SQLException
+	{
+		
+		ArrayList<OfertaRFC12> retorno= new ArrayList<OfertaRFC12>();
+		//reservas mas ocuapdas
+		String sql="Select ofert.*,numeroSemana2 "
+				+ "from(select idOferta,numeroSemana2, maximoOcupacion "
+				+ "from((select count(*)as numeroOcupacion1, ofe.id as idOferta, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana1 "
+				+ "FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID "
+				+ "group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') order by ofe.id)"
+				+ " INNER JOIN (select min(numeroOcupacion2)as maximoOcupacion, numeroSemana2"
+				+ " from(select count(*)as numeroOcupacion2, ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana2 "
+				+ "FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) "
+				+ "group by numeroSemana2)ON numeroSemana1=numeroSemana2 and numeroOcupacion1=maximoOcupacion)) "
+				+ "inner join OFERTA ofert ON ofert.ID=idOferta order by numeroSemana2;";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			int id = rs.getInt("id");
+			int capacidadReal = rs.getInt("capacidadReal");
+			double costo= rs.getDouble("costo");
+			int disponibilidad = rs.getInt("disponibilidad");
+			int idOperador = rs.getInt("idOperador");
+			int numeroSemana2= rs.getInt("numeroSemana2");
+			retorno.add(new OfertaRFC12(id, idOperador, capacidadReal, costo, disponibilidad,numeroSemana2));
+		}
+		
+		return retorno;
+		
+	}
+		
 
 
 		public List<Oferta> ofertasPocaDemanda() throws SQLException
