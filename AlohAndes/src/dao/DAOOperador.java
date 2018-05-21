@@ -9,7 +9,9 @@ import java.util.ArrayList;
 
 import org.codehaus.jackson.node.BigIntegerNode;
 
+import vos.OfertaRFC12;
 import vos.Operador;
+import vos.OperadorRFC12;
 
 
 public class DAOOperador {
@@ -106,7 +108,86 @@ public class DAOOperador {
 		}
 		return operadores;
 	}
+	
+	public ArrayList<OperadorRFC12> rfc12OperadorMaximo() throws SQLException
+	{
+		
+		ArrayList<OperadorRFC12> retorno= new ArrayList<OperadorRFC12>();
+		//reservas mas ocuapdas
+		String sql="select opera.*, numeroSemana2 from((select idOperador,numeroSemana2, maximoOcupacion from((select count(*)as numeroOcupacion1, op.ID AS idOperador, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana1 FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID INNER JOIN OPERADOR op ON \r\n" + 
+				"op.ID= ofe.IDOPERADOR group by op.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) \r\n" + 
+				"INNER JOIN (select max(numeroOcupacion2)as maximoOcupacion, numeroSemana2\r\n" + 
+				"from(select count(*)as numeroOcupacion2, op.ID, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana2 FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID INNER JOIN OPERADOR op ON \r\n" + 
+				"op.ID= ofe.IDOPERADOR group by op.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) group by numeroSemana2 )\r\n" + 
+				"ON numeroSemana1=numeroSemana2 and numeroOcupacion1=maximoOcupacion))INNER JOIN OPERADOR opera ON opera.id=idOperador) order by numeroSemana2;";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			try {
+				int id  = rs.getInt("id");
+				String nombre= rs.getString("nombre");
+				long documento = rs.getLong("documento");
+				String tipo = rs.getString("tipo");
+				String horaInicial = rs.getString("horaInicial");
+				String horaFinal = rs.getString("horaFinal");
+				int numeroSemana2= rs.getInt("numeroSemana2");
 
+
+				long nit = rs.getLong("nit");
+		
+				retorno.add(new OperadorRFC12(id,nombre,tipo,(int)documento,(int)nit,horaInicial, horaFinal, numeroSemana2));
+			}catch (Exception e) {
+				System.out.println("=====================================: "+rs.getInt("id"));
+				e.printStackTrace();
+			}
+		}
+		
+		return retorno;
+		
+	}
+
+	public ArrayList<OperadorRFC12> rfc12OperadorMinimo() throws SQLException
+	{
+		
+		ArrayList<OperadorRFC12> retorno= new ArrayList<OperadorRFC12>();
+		//reservas mas ocuapdas
+		String sql="select opera.*, numeroSemana2 from((select idOperador,numeroSemana2, maximoOcupacion from((select count(*)as numeroOcupacion1, op.ID AS idOperador, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana1 FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID INNER JOIN OPERADOR op ON \r\n" + 
+				"op.ID= ofe.IDOPERADOR group by op.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) \r\n" + 
+				"INNER JOIN (select min(numeroOcupacion2)as maximoOcupacion, numeroSemana2\r\n" + 
+				"from(select count(*)as numeroOcupacion2, op.ID, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana2 FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID INNER JOIN OPERADOR op ON \r\n" + 
+				"op.ID= ofe.IDOPERADOR group by op.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) group by numeroSemana2 )\r\n" + 
+				"ON numeroSemana1=numeroSemana2 and numeroOcupacion1=maximoOcupacion))INNER JOIN OPERADOR opera ON opera.id=idOperador) order by numeroSemana2;";
+		
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+		
+		while (rs.next()) {
+			try {
+				int id  = rs.getInt("id");
+				String nombre= rs.getString("nombre");
+				long documento = rs.getLong("documento");
+				String tipo = rs.getString("tipo");
+				String horaInicial = rs.getString("horaInicial");
+				String horaFinal = rs.getString("horaFinal");
+				int numeroSemana2= rs.getInt("numeroSemana2");
+
+
+				long nit = rs.getLong("nit");
+		
+				retorno.add(new OperadorRFC12(id,nombre,tipo,(int)documento,(int)nit,horaInicial, horaFinal, numeroSemana2));
+			}catch (Exception e) {
+				System.out.println("=====================================: "+rs.getInt("id"));
+				e.printStackTrace();
+			}
+		}
+		
+		return retorno;
+		
+	}
 	
 	public void addOperador(Operador operador) throws SQLException,  Exception {
 		

@@ -175,6 +175,7 @@ public class DAOIter {
 
 		public List<Estandar> darRFC10(String caracteristicas) throws SQLException {
 			
+			System.out.println(caracteristicas);
 			String fechaI = caracteristicas.split(":::")[0];
 			String fechaF = caracteristicas.split(":::")[1];
 			int idP = Integer.valueOf(caracteristicas.split(":::")[2]);
@@ -186,6 +187,7 @@ public class DAOIter {
 			
 			String sql = "SELECT * FROM RESERVA INNER JOIN CLIENTE ON CLIENTE.DOCUMENTO = RESERVA.DOCUMENTOCLIENTE AND RESERVA.FECHAINICIAL ";
 			sql += "BETWEEN "+ffi+" AND "+fff +" AND RESERVA.FECHAFINAL BETWEEN "+ ffi+" AND "+fff +" INNER JOIN OFERTA ON OFERTA.ID = RESERVA.IDOFERTA  inner join INMUEBLE on inmueble.idoferta = OFERTA.ID" ;
+			System.out.println(sql);
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			ResultSet rs= prepStmt.executeQuery();
@@ -194,7 +196,7 @@ public class DAOIter {
 				int doc = rs.getInt("documentocliente");
 				Date fi= rs.getDate("fechainicial");
 				Date ff= rs.getDate("fechafinal");
-				String nombre = rs.getString("valor");
+				String nombre = rs.getString("nombre");
 				String tipo = rs.getString("tipo");
 				String rol= rs.getString("tamanio");
 				String categoria = rs.getString("categoria");

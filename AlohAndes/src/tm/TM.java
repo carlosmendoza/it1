@@ -27,8 +27,10 @@ import vos.Factura;
 import vos.IndiceOcupacion;
 import vos.Inmueble;
 import vos.Oferta;
+import vos.OfertaRFC12;
 import vos.OfertaTotal;
 import vos.Operador;
+import vos.OperadorRFC12;
 import vos.Reserva;
 import vos.ReservaMasiva;
 
@@ -122,7 +124,138 @@ public class TM {
 		}
 		return fechas;	
 	}
+	
+	//requerimiento 12 a
+	public ArrayList<OfertaRFC12>  rfc12ReservaMaxima() throws Exception
+	{
+		ArrayList<OfertaRFC12>  ofertas;
+		DAOOferta daoOferta = new DAOOferta();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			ofertas= daoOferta.rfc12ReservaMaxima();
 
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return ofertas;	
+	}
+	
+	//requerimiento 12 b
+	public ArrayList<OfertaRFC12>  rfc12ReservaMinima() throws Exception
+	{
+		ArrayList<OfertaRFC12>  ofertas;
+		DAOOferta daoOferta = new DAOOferta();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOferta.setConn(conn);
+			ofertas= daoOferta.rfc12ReservaMinima();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOferta.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return ofertas;	
+	}
+
+	//requerimiento 12 c
+	public ArrayList<OperadorRFC12>  rfc12OperadorMaximo() throws Exception
+	{
+		ArrayList<OperadorRFC12>  operadores;
+		DAOOperador daoOperador = new DAOOperador();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			operadores= daoOperador.rfc12OperadorMaximo();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return operadores;	
+	}
+	
+	//requerimiento 12 c
+	public ArrayList<OperadorRFC12>  rfc12OperadorMinimo() throws Exception
+	{
+		ArrayList<OperadorRFC12>  operadores;
+		DAOOperador daoOperador = new DAOOperador();
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoOperador.setConn(conn);
+			operadores= daoOperador.rfc12OperadorMinimo();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoOperador.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return operadores;	
+	}
 	
 	public List<Oferta>  ofertasPocaDemanda() throws Exception
 	{
@@ -1214,7 +1347,7 @@ public class TM {
 				throw exception;
 			}
 		}
-		return null;
+		return reservas;
 	}
 
 
