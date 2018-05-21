@@ -10,6 +10,7 @@ import java.util.List;
 
 import vos.Cliente;
 import vos.ClienteU;
+import vos.OperadorRFC12;
 
 
 public class DAOCliente {
@@ -72,6 +73,39 @@ public class DAOCliente {
 				clientes.add(new Cliente( nombre, documento, rol));
 			}
 			return clientes;
+		}
+
+		public ArrayList<Cliente> rfc13MejoresClientes() throws SQLException
+		{
+			
+			ArrayList<Cliente> clientes= new ArrayList<Cliente>();
+			//reservas mas ocuapdas
+			String sql="select client.*  from CLIENTE client INNER JOIN RESERVA rs ON client.DOCUMENTO=rs.DOCUMENTOCLIENTE \r\n" + 
+					"INNER JOIN FACTURA  fac ON fac.RESERVAID= rs.ID \r\n" + 
+					"WHERE fac.valor /(rs.FECHAFINAL-rs.FECHAINICIAL)> 150000 \r\n" + 
+					"UNION\r\n" + 
+					"select cl.* from(SELECT client.documento as cc,sum(to_char(TO_DATE(rs.FECHAFINAL),'MM')+1- to_char(TO_DATE(rs.FECHAINICIAL),'MM')) as numMes\r\n" + 
+					"from CLIENTE client INNER JOIN RESERVA rs ON client.DOCUMENTO=rs.DOCUMENTOCLIENTE \r\n" + 
+					"group by client.documento)INNER JOIN CLIENTE cl on cl.documento=cc where numMes >=12\r\n" + 
+					"UNION\r\n" + 
+					"select cl.* from(SELECT client.documento as cc,inm.categoria as categoria\r\n" + 
+					"from CLIENTE client INNER JOIN RESERVA rs ON client.DOCUMENTO=rs.DOCUMENTOCLIENTE \r\n" + 
+					"INNER JOIN OFERTA ofe ON ofe.id=rs.IDOFERTA INNER JOIN INMUEBLE inm ON inm.IDOFERTA=ofe.ID )\r\n" + 
+					"INNER JOIN CLIENTE cl on cl.documento=cc where categoria ='suite'";
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				String nombre = rs.getString("nombre");
+				int documento = rs.getInt("documento");
+				String rol = rs.getString("rol");
+				clientes.add(new Cliente( nombre, documento, rol));
+			}
+			return clientes;
+			
+			
 		}
 
 

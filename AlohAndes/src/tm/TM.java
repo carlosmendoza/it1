@@ -324,6 +324,38 @@ public class TM {
 		return clientes;
 	}
 
+	//requerimiento 13 c
+		public ArrayList<Cliente>  rfc13MejoresClientes() throws Exception
+		{
+			ArrayList<Cliente>  clientes;
+			DAOCliente daoCliente = new DAOCliente();
+			try {
+				////// transaccion
+				this.conn = darConexion();
+				daoCliente.setConn(conn);
+				clientes= daoCliente.rfc13MejoresClientes();
+
+			} catch (SQLException e) {
+				System.err.println("SQLException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} catch (Exception e) {
+				System.err.println("GeneralException:" + e.getMessage());
+				e.printStackTrace();
+				throw e;
+			} finally {
+				try {
+					daoCliente.cerrarRecursos();
+					if (this.conn != null)
+						this.conn.close();
+				} catch (SQLException exception) {
+					System.err.println("SQLException closing resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return clientes;	
+		}
 
 	public Cliente darClientePorId(int id) throws Exception {
 		Cliente cliente;

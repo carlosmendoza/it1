@@ -91,17 +91,11 @@ public class DAOOferta {
 		
 		ArrayList<OfertaRFC12> retorno= new ArrayList<OfertaRFC12>();
 		//reservas mas ocuapdas
-		String sql="Select ofert.*,numeroSemana2 "
-				+ "from(select idOferta,numeroSemana2, maximoOcupacion "
-				+ "from((select count(*)as numeroOcupacion1, ofe.id as idOferta, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana1 "
-				+ "FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID "
-				+ "group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') order by ofe.id)"
-				+ " INNER JOIN (select max(numeroOcupacion2)as maximoOcupacion, numeroSemana2"
-				+ " from(select count(*)as numeroOcupacion2, ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana2 "
-				+ "FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') ) "
-				+ "group by numeroSemana2)ON numeroSemana1=numeroSemana2 and numeroOcupacion1=maximoOcupacion)) "
-				+ "inner join OFERTA ofert ON ofert.ID=idOferta order by numeroSemana2;";
-		
+		String sql="Select ofert.*,numeroSemana2 from(select idOferta,numeroSemana2, maximoOcupacion from((select count(*)as numeroOcupacion1, ofe.id as idOferta, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana1 FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') order by ofe.id\r\n" + 
+				")INNER JOIN (select max(numeroOcupacion2)as maximoOcupacion, numeroSemana2\r\n" + 
+				"from(select count(*)as numeroOcupacion2, ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') AS numeroSemana2 FROM OFERTA ofe INNER JOIN RESERVA rs ON rs.IDOFERTA=ofe.ID group by ofe.id, to_char(TO_DATE(rs.FECHAINICIAL),'IW') )\r\n" + 
+				"group by numeroSemana2)ON numeroSemana1=numeroSemana2 and numeroOcupacion1=maximoOcupacion)) inner join OFERTA ofert ON ofert.ID=idOferta order by numeroSemana2;\r\n" + 
+				"";
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();

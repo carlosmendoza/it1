@@ -63,6 +63,24 @@ public class ClienteServices {
 	}
 	
 	@GET
+	@Path("mejores")
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response rfc13MejoresClientes() {
+		TM tm = new TM(getPath());
+		List<Cliente> clientes;
+		try {
+			
+			clientes = tm.rfc13MejoresClientes();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity(doErrorMessage(e)).build();
+			
+		}
+		return Response.status(200).entity(clientes).build();
+	}
+
+	@GET
 	@Path("idClienteU/{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response getUsoCliente(@PathParam("id")int id) {
@@ -79,8 +97,6 @@ public class ClienteServices {
 		}
 		return Response.status(200).entity(clientes).build();
 	}
-
-
 
 	
 

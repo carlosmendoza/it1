@@ -148,7 +148,7 @@ public class OperadorServices {
 	
 	
 	@GET
-	@Path("maximaOcupacion")
+	@Path("maximaSolicitud")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response rfc12OperadorMaximo() {
 
@@ -163,7 +163,7 @@ public class OperadorServices {
 	}
 	
 	@GET
-	@Path("minimaOcupacion")
+	@Path("minimaSolicitud")
 	@Produces({ MediaType.APPLICATION_JSON })
 	public Response rfc12OperadorMinimo() {
 
