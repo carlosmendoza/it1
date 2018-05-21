@@ -14,6 +14,7 @@ import dao.DAOCliente;
 import dao.DAODinero;
 import dao.DAOFactura;
 import dao.DAOInmueble;
+import dao.DAOIter;
 import dao.DAOOferta;
 import dao.DAOOfertaTotal;
 import dao.DAOOperador;
@@ -21,6 +22,7 @@ import dao.DAOReserva;
 import vos.Cliente;
 import vos.ClienteU;
 import vos.DineroProv;
+import vos.Estandar;
 import vos.Factura;
 import vos.IndiceOcupacion;
 import vos.Inmueble;
@@ -1180,6 +1182,39 @@ public class TM {
 			}
 		}
 		return reservas;
+	}
+
+
+	public List<Estandar> getRFC10(String caracteristicas) throws SQLException {
+		List<Estandar> reservas;
+		DAOIter daoReserva = new DAOIter();
+
+		try {
+			////// transaccion
+			this.conn = darConexion();
+			daoReserva.setConn(conn);
+			reservas = daoReserva.darRFC10(caracteristicas);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoReserva.cerrarRecursos();
+				if (this.conn != null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return null;
 	}
 
 
